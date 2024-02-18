@@ -2,7 +2,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.middleware.csrf import get_token  
-from .models import User 
+from .models import User
+from django.contrib.auth.hashers import make_password, check_password
+
 
 def logout(request):
     request.session.clear()
@@ -24,7 +26,7 @@ def login(request):
         password = request.POST.get('password')
         try:
             user = User.objects.get(email=email)
-            if password==user.password:  
+            if check_password(password,user.password):  
                 if True:#user.email_verified:  # Check if email is veri
                     request.session["user"]=user
                     return JsonResponse({"message": "success"}, status=200)
@@ -57,7 +59,7 @@ def signup(request):
         	
         additional_params = request.POST.get('additional_params')  
         try:
-        	new_user = User(name=name, email=email, password=password, additional_params=additional_params)
+        	new_user = User(name=name, email=email, password=make_password(password), additional_params=additional_params)
         	new_user.save()
         	return JsonResponse({'message': 'success'},status=200)
         except Exception as e:

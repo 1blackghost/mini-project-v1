@@ -4,8 +4,15 @@ from django.template import loader
 from django.middleware.csrf import get_token  
 from .models import User 
 
+def logout(request):
+    request.session.clear()
+    return HttpResponse("logged out")
+
 def dash(request):
-    return HttpResponse("logged in")
+    if request.session.has_key("user"):
+        return HttpResponse("logged in")
+    else:
+        return redirect("login")
 
 def index(request):
     template = loader.get_template('home.html')
@@ -19,6 +26,7 @@ def login(request):
             user = User.objects.get(email=email)
             if password==user.password:  
                 if True:#user.email_verified:  # Check if email is veri
+                    request.session["user"]=user
                     return JsonResponse({"message": "success"}, status=200)
                 else:
                     return JsonResponse({"message": "Email not verified"}, status=403)

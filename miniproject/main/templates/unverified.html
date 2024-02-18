@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unverified Page</title>
+</head>
+<body>
+    <p>Sample unverified page using Jinja template {{ email }}</p>
+    <p>if you have already verfiied to email login here add a link tag to login page here</p>
+    <button id="resendButton" onclick="window.location.href='/resend'" disabled>Resend Email</button>
+    <p id="countdown"></p>
+    <p id="timer" style="display: none;">{{ timer_duration }}</p>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function resendEmail() {
+            alert('Resending email...');
+        }
+
+        function startTimer(duration, display) {
+            let timer = duration;
+            let intervalId = setInterval(function () {
+                let minutes = parseInt(timer / 60, 10);
+                let seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(intervalId);
+                    display.textContent = "Resend again?";
+                    document.getElementById('resendButton').disabled = false;
+                }
+            }, 1000);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let duration = parseInt($("#timer").text()); 
+            let display = document.getElementById('countdown');
+            startTimer(duration, display);
+        });
+    </script>
+</body>
+</html>

@@ -17,7 +17,7 @@
         </div>
         <h2>Sign Up</h2>
         <p>connect with your world in a single click</p>
-        <p id="err"></p>
+        <p id="err" style="display: none;"></p>
         <form id="signin-form" class="signin-form" method="post" novalidate>
             {% csrf_token %}
             <span>
@@ -125,6 +125,7 @@
             error: function(xhr, status, error) {
             	var responseObj = JSON.parse(xhr.responseText);
             	errorMessage = responseObj.message;
+                document.getElementById('err').style.display="block"
                 $("#err").text(errorMessage);
                 
             }

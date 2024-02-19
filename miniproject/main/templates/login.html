@@ -16,7 +16,7 @@
     </div>
     <h2>Sign In</h2>
     <p>connect with your world in a single click</p>
-    <p id="err"></p>
+    <p id="err" style="display: none;"></p>
     <form id="signin-form" class="signin-form" method="post" novalidate>
         {% csrf_token %}
         <span>
@@ -75,15 +75,20 @@
                     var responseObj = JSON.parse(xhr.responseText);
                     var errorMessage = responseObj.message;
                     if (xhr.status === 401) {
+                        document.getElementById('err').style.display="block"
                         $("#err").text(errorMessage);
                     } else if (xhr.status === 404) {
+                        document.getElementById('err').style.display="block"
                         $("#err").text(errorMessage);
                     } else if (xhr.status === 403) {
+                        document.getElementById('err').style.display="block"
                         $("#err").text(errorMessage);
                     } else {
+                        document.getElementById('err').style.display="block"
                         $("#err").text("Server Error: " + errorMessage);
                     }
                 } catch (e) {
+                    document.getElementById('err').style.display="block"
                     $("#err").text(xhr.responseText);
                 }
             }

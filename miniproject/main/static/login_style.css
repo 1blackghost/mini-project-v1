@@ -35,8 +35,7 @@ html,body{
     width: 10px;
 }
 .logo{
-    width:50px;
-    height: 50px;
+    width:60px;
     margin-left: auto;
 }
 h2{
@@ -83,10 +82,12 @@ p{
     color: rgb(39, 39, 39);
     text-align: center;
     margin-top: 20px;
+    padding-bottom: 40px;
 }
 .signin-form > p > a{
     text-decoration: none;
     color:#e81900;
+   
 }
 .signin-button{
     width: 100%;
@@ -106,4 +107,6 @@ p{
     color: red;
     text-transform: uppercase;
     font-weight: 900;
+    background-color: #e817003a;
+    padding: 10px;
 }

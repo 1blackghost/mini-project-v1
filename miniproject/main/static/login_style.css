@@ -6,10 +6,20 @@ html,body{
 }
 .container{
     width:400px;
-    height: fit-content;
+    height: 100svh;
     margin: auto;
     background-color: transparent;
     scale: 0.9;
+}
+@media screen and (max-width:400px) {
+    body{
+        overflow: hidden;
+        padding: 20px;
+        min-width: 400px;
+    }
+    .container{
+      scale: 1;  
+    }
 }
 .top_bar{
     width:100%;

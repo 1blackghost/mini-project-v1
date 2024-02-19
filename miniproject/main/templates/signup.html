@@ -4,160 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-image: url('hi.jpg');
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #fff;
-        }
-
-        .back-button {
-            background: none;
-            border: none;
-            font-size: 70px;
-            cursor: pointer;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 30px 20px;
-            color: blueviolet;
-        }
-
-        .signup-container {
-            color: black;
-            text-align: center;
-            margin-top: 20vh; /* Adjusted margin for better vertical centering */
-            width: 120%; /* Adjusted width for better responsiveness */
-            max-width: 1000px;
-            position: relative;/* Set maximum width */
-        }
-
-        .signup-container h1 {
-            position: relative;
-            right: 32%;
-            font-size: 2em;
-            margin: 2px;
-        }
-
-        .signup-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            width: 100%; /* Adjusted width for full width on smaller screens */
-            position: relative;
-        }
-
-        .form-group label {
-            position: relative;
-            right: 40%;
-            color: black;
-            font-size: 1em;
-            margin-bottom: 5px;
-        }
-        #co{
-            position: relative;
-            left:-33%;
-            
-        }
-            #err{
-            position: relative;
-            right:37%;
-            font-size: 13px;
-            color:red;
-            
-            
-        }
-        .form-group input {
-            padding: 12px;
-            border: none;
-            outline: none;
-            font-size: 1em;
-            width: calc(100% - 40px); /* Adjusted width for eye icon */
-            background: none;
-            color: black;
-            border-bottom: 3px solid #fff;
-            border-bottom-color: blueviolet;
-        }
-
-        .password-toggle {
-            position: absolute;
-            top: 40%;
-            right: 0;
-            transform: translateY(-50%);
-            cursor: pointer;
-            width: 24px; /* Set width for the icon */
-        }
-
-        .signup-button {
-            background-color: blueviolet;
-            color: #fff;
-            padding: 14px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 1.2em;
-            transition: background-color 1s;
-            width: 100%; /* Adjusted width for full width on smaller screens */
-        }
-
-
-    .icon-container {
-            position: absolute;
-            top:50px;
-            right: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .icon {
-            width: 40px;
-            height: auto;
-        }
-
-        .caption {
-            font-size: 12px;
-            margin-top: 5px;
-            color:black;
-        }
-        .signup-button:hover {
-            background-color: rebeccapurple;
-        }
-
-        @media only screen and (max-width: 768px) {
-            .back-button {
-                font-size: 50px;
-                top: 5px;
-                left: 5px;
-                height: 40px;
-                width: 40px;
-                padding: 30px 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/static/login_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	
-    <button class="back-button" onclick="window.location='/'">&#8249;</button>
-        <div class="icon-container">
-        <img class="icon" src="/static/images/Logo%20small.png" alt="Icon">
-          <div class="caption"><b>Planet</b></div>
+    <div class="container">
+        <div class="top_bar">
+            <button class="back_button" onclick="window.location.href='/'"><i class="fa fa-angle-left"></i></button>
+            <img src="../static/images/Logo.png" class="logo"/>
+        </div>
+        <h2>Sign Up</h2>
+        <p>connect with your world in a single click</p>
+        <p id="err"></p>
+        <form id="signin-form" class="signin-form" method="post" novalidate>
+            {% csrf_token %}
+            <span>
+                Name
+                <input type="text" placeholder="Your Name" id="name" name="name" required>
+            </span>
+            <span>
+                Email
+                <input type="email" placeholder="email@yourdomain.com" id="email" name="email" required>
+            </span>
+            <span>
+                Password
+                <input type="password" placeholder="Enter your password" id="password" name="password" required>
+            </span>
+            <span>
+                Confirm Password
+                <input type="password" placeholder="Confirm your password" id="confirm" name="confirm-password" required>
+            </span>
+            <button id="myButton" class="signin-button">Sign Up</button>
+            <p>Already have an account? <a href="/login/">Login</a></p>
+        </form>
+    
     </div>
-    <div class="signup-container">
-        
-        <h1>Sign Up</h1>
 
-        <form class="signup-form" method="post">
+        <!-- <form class="signup-form" method="post">
             	{% csrf_token %}
                     <p id="err"></p>
 
@@ -185,9 +70,7 @@
               <div class="icon-container">
         
     </div>
-        </form>
-        
-    </div>
+        </form> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function togglePasswordVisibility(fieldId) {

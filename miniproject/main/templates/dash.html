@@ -12,9 +12,7 @@
     <canvas id="canvas" style="display: none;"></canvas>
   </div>
   <div id="result"></div>
-  <!--<button id="startScanner">Start Scanner</button> Button to start the scanner -->
 
-  <!-- QuaggaJS library via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
  <script>
@@ -22,7 +20,7 @@
     const videoElement = document.getElementById('barcode-scanner');
     const canvas = document.getElementById('canvas');
     const canvasContext = canvas.getContext('2d');
-    let scannerStarted = false; // Track if the scanner has been started
+    let scannerStarted = false; 
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -50,8 +48,7 @@
           return;
         }
         Quagga.start();
-        scannerStarted = true; // Set scannerStarted to true when the scanner starts
-
+        scannerStarted = true; 
         Quagga.onProcessed((result) => {
           const drawingCanvas = Quagga.canvas.ctx.overlay;
           if (result) {
@@ -71,7 +68,7 @@
               window.location.href = encodeURIComponent(result.codeResult.code);
 
               Quagga.stop();
-              scannerStarted = false; // Reset scannerStarted to false when the scanner stops
+              scannerStarted = false; 
             }
             
           }

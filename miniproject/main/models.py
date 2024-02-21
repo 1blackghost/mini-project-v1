@@ -29,3 +29,32 @@ class Verify_Email(models.Model):
 
     def __str__(self):
         return self.email
+    
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Cart for {self.user.username}"
+
+    def add_item(self, item_name, quantity=1):
+        existing_item = self.cartitem_set.filter(item=item_name).first()
+        if existing_item:
+            existing_item.quantity += quantity
+            existing_item.save()
+        else:
+            CartItem.objects.create(cart=self, item=item_name, quantity=quantity)
+
+    def remove_item(self, item_name):
+        self.cartitem_set.filter(item=item_name).delete()
+
+    def get_quantity(self, item_name):
+        item = self.cartitem_set.filter(item=item_name).first()
+        return item.quantity if item else 0
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    item = models.CharField(max_length=100)
+    quantity = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.item} in cart for {self.cart.user.username}"

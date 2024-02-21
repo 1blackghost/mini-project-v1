@@ -87,8 +87,11 @@ def send_verification_email(email, hash_value):
     print("verify email here: /verify/"+hash_value)
 
 def logout(request):
-    request.session.clear()
-    return HttpResponse("logged out")
+    if "user" in request.session:
+        request.session.clear()
+        return redirect("login")
+    else:
+        return redirect("login")
 
 def cart(request,value):
     if request.method == "POST":
@@ -97,8 +100,10 @@ def cart(request,value):
 
 def dash(request):
     if request.session.get("user"):
+        context = {'user': request.session["user"]}
         template = loader.get_template('dash.html')
-        return HttpResponse(template.render())
+        rendered_template = template.render(context, request)
+        return HttpResponse(rendered_template)
     else:
         return redirect("login")
 

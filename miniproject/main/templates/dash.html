@@ -6,12 +6,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-  <h1>Barcode Scanner</h1>
+  <h1>Welcome , {{user}}</h1>
   <div id="scanner-container">
     <video id="barcode-scanner" width="50%" height="30%" autoplay playsinline></video>
     <canvas id="canvas" style="display: none;"></canvas>
   </div>
   <div id="result"></div>
+  <button id="openScanner">Open Scanner</button>
+  <button id="logout">Logout</button>
+  <button id="cart">Cart</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
@@ -22,61 +25,67 @@
     const canvasContext = canvas.getContext('2d');
     let scannerStarted = false; 
 
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoElement.srcObject = stream;
+    document.getElementById('openScanner').addEventListener('click', async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        videoElement.srcObject = stream;
 
-      const config = {
-        inputStream: {
-          name: 'Live',
-          type: 'LiveStream',
-          target: videoElement,
-          constraints: {
-            width: { min: 400 },
-            height: { min: 400 },
-            facingMode: 'environment',
+        const config = {
+          inputStream: {
+            name: 'Live',
+            type: 'LiveStream',
+            target: videoElement,
+            constraints: {
+              width: { min: 400 },
+              height: { min: 400 },
+              facingMode: 'environment',
+            },
           },
-        },
-        decoder: {
-          readers: ['ean_reader', 'code_128_reader', 'code_39_reader', 'upc_reader'],
-        },
-      };
+          decoder: {
+            readers: ['ean_reader', 'code_128_reader', 'code_39_reader', 'upc_reader'],
+          },
+        };
 
-      Quagga.init(config, function (err) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        Quagga.start();
-        scannerStarted = true; 
-        Quagga.onProcessed((result) => {
-          const drawingCanvas = Quagga.canvas.ctx.overlay;
-          if (result) {
-            if (result.boxes) {
-              drawingCanvas.clearRect(0, 0, parseInt(drawingCanvas.canvas.width), parseInt(drawingCanvas.canvas.height));
-              result.boxes.filter((box) => box !== result.box).forEach((box) => {
-                Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCanvas, { color: 'green', lineWidth: 2 });
-              });
-            }
-
-            if (result.box) {
-              Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCanvas, { color: 'blue', lineWidth: 2 });
-            }
-
-            if (result.codeResult && result.codeResult.code) {
-              document.getElementById('result').innerHTML += `Detected barcode: ${result.codeResult.code}`;
-              window.location.href = encodeURIComponent(result.codeResult.code);
-
-              Quagga.stop();
-              scannerStarted = false; 
-            }
-            
+        Quagga.init(config, function (err) {
+          if (err) {
+            console.error(err);
+            return;
           }
+          Quagga.start();
+          scannerStarted = true; 
+          Quagga.onProcessed((result) => {
+            const drawingCanvas = Quagga.canvas.ctx.overlay;
+            if (result) {
+              if (result.boxes) {
+                drawingCanvas.clearRect(0, 0, parseInt(drawingCanvas.canvas.width), parseInt(drawingCanvas.canvas.height));
+                result.boxes.filter((box) => box !== result.box).forEach((box) => {
+                  Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCanvas, { color: 'green', lineWidth: 2 });
+                });
+              }
+
+              if (result.box) {
+                Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCanvas, { color: 'blue', lineWidth: 2 });
+              }
+
+              if (result.codeResult && result.codeResult.code) {
+                document.getElementById('result').innerHTML += `Detected barcode: ${result.codeResult.code}`;
+                window.location.href = encodeURIComponent(result.codeResult.code);
+
+                Quagga.stop();
+                scannerStarted = false; 
+              }
+              
+            }
+          });
         });
-      });
-    } catch (error) {
-      console.error('Error accessing the camera:', error);
-    }
+      } catch (error) {
+        console.error('Error accessing the camera:', error);
+      }
+    });
+
+    document.getElementById('logout').addEventListener('click', () => {
+      window.location.href="/logout";
+    });
   });
 </script>
 

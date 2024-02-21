@@ -22,8 +22,10 @@ urlpatterns = [
     path("",views.index,name="index"),
     path("login/",views.login,name="login"),
     path("signup/",views.signup,name="signup"),
-    path("dash/",views.dash,name="dash"),
-    path("logout/",views.logout,name="logout"),
+    path("dash",views.dash,name="dash"),
+    path("logout",views.logout,name="logout"),
     path("unverified",views.unverified,name="unverified"),
-    path("resend",views.resend,name="resend")
+    path("resend",views.resend,name="resend"),
+    path("verify/<str:hash_value>",views.verify,name="verify"),
+    path("cart/<str:value>",views.cart,name="cart"),
 ]

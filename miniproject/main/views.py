@@ -7,6 +7,22 @@ from django.contrib.auth.hashers import make_password, check_password
 import time
 from .models import Verify_Email
 
+
+def verify(request, hash_value):
+    try:
+        verify_email = Verify_Email.objects.get(hash=hash_value)
+        user = User.objects.get(email=verify_email.email)
+        request.session.clear()
+        request.session["user"]=user.name
+        user.email_verified = 1
+        user.save()
+        verify_email.delete()
+
+        template = loader.get_template('verified.html')
+        return HttpResponse(template.render())  
+    except Verify_Email.DoesNotExist:
+        return JsonResponse({"message": "Invalid verification link"}, status=400)
+
 def resend(request):
     verification_started = request.session.get("verification_started")
     
@@ -68,23 +84,26 @@ def unverified(request):
         return HttpResponse("Verification not started or user not logged in")
 
 def send_verification_email(email, hash_value):
-    # Your code to send the verification email with the given email and hash
-    print("email send called")
-
+    print("verify email here: /verify/"+hash_value)
 
 def logout(request):
     request.session.clear()
     return HttpResponse("logged out")
 
+def cart(request,value):
+    if request.method == "POST":
+        print("value",value)
+        return HttpResponse("ok")
 
 def dash(request):
-    if request.session.has_key("user"):
-        return HttpResponse("logged in")
+    if request.session.get("user"):
+        template = loader.get_template('dash.html')
+        return HttpResponse(template.render())
     else:
         return redirect("login")
 
-
 def index(request):
+    
     template = loader.get_template('home.html')
     return HttpResponse(template.render())
 
@@ -96,7 +115,7 @@ def login(request):
         try:
             user = User.objects.get(email=email)
             if check_password(password, user.password):
-                if user.email_verified:  # user.email_verified:  # Check if email is veri
+                if user.email_verified:  
                     request.session["user"] = user
                     return JsonResponse({"message": "success"}, status=200)
                 if not user.email_verified:

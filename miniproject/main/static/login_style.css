@@ -70,6 +70,9 @@ p{
     margin-top: 10px;
     border-bottom: 3px solid #e81900;
 }
+#pass::-ms-clear,#password::-ms-clear,#confirm::-ms-clear{
+    display: none;
+}
 .signin-form > span > a{
     font-size: 15px;
     margin-left: auto;
@@ -90,6 +93,15 @@ p{
     text-decoration: none;
     color:#e81900;
    
+}
+#see{
+    width: 35px;
+    height: 25px;
+    margin-left: calc(100% - 35px);
+    margin-top: -35px;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
 }
 .signin-button{
     width: 100%;

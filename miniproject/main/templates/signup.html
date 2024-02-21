@@ -31,10 +31,14 @@
             <span>
                 Password
                 <input type="password" placeholder="Enter your password" id="pass" name="password" required>
+                <button type="button" id="see" onclick="togglePasswordVisibility('pass',0)">
+                    <img class="eye" src="/static/images/eye normal.png"/></button>
             </span>
             <span>
                 Confirm Password
                 <input type="password" placeholder="Confirm your password" id="confirm" name="confirm-password" required>
+                <button type="button" id="see" onclick="togglePasswordVisibility('confirm',1)">
+                    <img class="eye" src="/static/images/eye normal.png"/></button>
             </span>
             <button type="submit" id="myButton" class="signin-button">Sign Up</button>
             <p>Already have an account? <a href="/login/">Login</a></p>
@@ -73,28 +77,17 @@
         </form> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function togglePasswordVisibility(fieldId) {
+        
+            function togglePasswordVisibility(fieldId,imgno) {
             var passwordField = document.getElementById(fieldId);
-            var passwordToggle = document.querySelector("." + fieldId + "-toggle");
+            var passwordToggle = document.getElementsByClassName('eye')[imgno];
 
             if (passwordField.type === "password") {
                 passwordField.type = "text";
                 passwordToggle.src = "/static/images/eye.png";
             } else {
                 passwordField.type = "password";
-                passwordToggle.src = "/static/images/eye%20X.png";
-            }
-        }
-            function togglePasswordVisibility1(fieldId) {
-            var passwordField = document.getElementById(fieldId);
-            var passwordToggle = document.querySelector("." + fieldId + "-toggle");
-
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                passwordToggle.src = "/static/images/eye.png";
-            } else {
-                passwordField.type = "password";
-                passwordToggle.src = "/static/images/eye%20X.png";
+                passwordToggle.src = "/static/images/eye normal.png";
             }
         }
 

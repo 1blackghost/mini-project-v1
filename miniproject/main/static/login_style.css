@@ -6,7 +6,7 @@ html,body{
 }
 .container{
     width:400px;
-    height: 100svh;
+    height:fit-content;
     margin: auto;
     background-color: transparent;
     scale: 0.9;

@@ -1,0 +1,185 @@
+html,body{
+    margin: 0;
+    overflow: hidden;
+}
+:root{
+    --font:"Poppins", sans-serif;
+}
+.container{
+    width:400px;
+    height: fit-content;
+    margin:10px auto;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+nav{
+    height: 50px;
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 2px 2px 5px rgb(193, 193, 193);
+}
+.logo{
+    width: 50px;
+    margin-left:auto ;
+}
+nav > button{
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: 0;
+    outline:0;
+    font-size: 25px;
+    z-index:100;
+    transition: 0.2s;
+}
+.profile{
+    width: 75px;
+    border-radius: 200px;
+    margin:10px;
+    margin-top: 10px;
+
+}
+h1{
+    margin-left: 10px;
+    font-size: 18px;
+    font-family: var(--font);
+    color:#e81900;
+    font-weight: 700;
+}
+.container > p{
+    color: grey;
+    font-family: var(--font);
+    text-transform: capitalize;
+    font-size: 15px;
+    margin:10px auto;
+}
+.search{
+    width: 100%;
+    display: flex ;
+    flex-direction: column;
+}
+.search > p{
+    color: grey;
+    font-family: var(--font);
+    text-transform: capitalize;
+    font-size: 14px;
+    margin: 10px;
+    margin-bottom: 0%;
+}
+.search > i{
+    font-size: 15px;
+    
+}
+.options{
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: 0.5s;
+    opacity: 0;
+}
+.options > button{
+    width: 150px;
+    height: 40px;
+    margin: 5px;
+    padding-left: 10px;
+    border-radius: 10px;
+    border: 0;
+    outline: 0;
+    text-align: left;
+    font-family: var(--font);
+    font-size: 15px;
+    background-color: transparent;
+}
+.options > button:nth-child(1){
+    color: #e81900;
+}
+.options > h1{
+    margin-top: 0px;
+    padding-bottom: 20px;
+    width:calc(100% - 20px) ;
+    border-bottom: 1px solid rgb(198, 198, 198);
+}
+.search > button{
+    width: calc(100% - 15px);
+    height: 40px;
+    background-color: rgb(231, 231, 231);
+    border: 0;
+    outline: 0;
+    text-align: left;
+    border-radius: 5px;
+    margin: 10px auto;
+    padding: 0px 10px;
+    color: rgb(100, 100, 100);
+    font-family: var(--font);
+    font-size: 15px;
+}
+.search > button > i{
+    font-size: 18px;
+    margin-right: 10px;
+}
+h2{
+    margin: 0px 10px;
+    font-size: 20px;
+    font-family: var(--font);
+    color:#e81900;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+.search_popup{
+    width: 400px;
+    bottom: 0;
+    background-color: white;
+    position: absolute;
+    transition: 0.5s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 150;
+}
+.search_popup > input{
+    height: 40px;
+    width:calc(100% - 40px) ;
+    padding: 5px;
+    border: 0;
+    outline: 0;
+    border-bottom: 3px solid #e81900;
+    font-family: var(--font);
+    font-size: 18px;
+}
+.search_popup > span{
+    margin: 20px 10px;
+    font-family: var(--font);
+    font-weight: bold;
+}
+.search_popup > button{
+    width: 40px;
+    height: 40px;
+    margin-top: -45px;
+    margin-left: auto;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    font-size: 18px;
+    color: grey;
+}
+video{
+    border: 3px solid black;
+    margin: auto;
+    height: fit-content;
+    border-radius: 5px;
+}
+#home{
+    flex-direction: column;
+}
+#scanner{
+    flex-direction: column;
+}

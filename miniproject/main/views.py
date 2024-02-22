@@ -5,19 +5,17 @@ from django.middleware.csrf import get_token
 from .models import User
 from django.contrib.auth.hashers import make_password, check_password
 import time
-from .models import Verify_Email,Cart
-from django.contrib.auth.decorators import login_required
+from .models import Verify_Email,Cart,CartItem
 
-def edit(request, value, qu):
+
+def get_cart(request):
     user = request.session.get("user")
     try:
-        cart, created = Cart.objects.get_or_create(user=user)
-        cart.add_item(item_name=value, quantity=qu)
-        cart.save()
-        return HttpResponse("Item quantity updated in cart")
+        cart_items = CartItem.objects.filter(cart__user=user)
+        cart_data = [{'item': item.item, 'quantity': item.quantity} for item in cart_items]
+        return JsonResponse({'cart': cart_data})
     except Exception as e:
-        error_message = f"Error editing cart: {str(e)}"
-        return HttpResponse(error_message)
+        return JsonResponse({'error': str(e)}, status=500)
 
 def cart(request, value, qu):
     user = request.session.get("user")
@@ -25,25 +23,32 @@ def cart(request, value, qu):
         cart, created = Cart.objects.get_or_create(user=user)
         cart.add_item(item_name=value, quantity=qu)
         cart.save()
-        return HttpResponse("Item added to cart")
+        return JsonResponse({"status": "ok"}, status=200)
     except Exception as e:
-        error_message = f"Error in cart: {str(e)}"
-        return HttpResponse(error_message)
+        return JsonResponse({"status": "bad"}, status=500)
 
 
-def delete(request, value, qu):
+def delete(request, value):
+    try:
+        user = request.session.get("user")
+        cart, created = Cart.objects.get_or_create(user=user)
+        cart.remove_item(item_name=value)
+        cart.save()
+        return JsonResponse({"status": "ok"}, status=200)
+    except Exception as e:
+        return JsonResponse({"status": "bad"}, status=500)
+        
+
+
+def edit(request, value, qu):
     user = request.session.get("user")
     try:
         cart, created = Cart.objects.get_or_create(user=user)
-        cart_item = cart.cartitem_set.filter(item=value, quantity=qu).first()
-        if cart_item:
-            cart_item.delete()
-            return HttpResponse("Item deleted from cart")
-        else:
-            return HttpResponse("Item with specified quantity not found in cart")
+        cart.add_item(item_name=value, quantity=qu)
+        cart.save()
+        return JsonResponse({"status": "ok"}, status=200)
     except Exception as e:
-        error_message = f"Error deleting item from cart: {str(e)}"
-        return HttpResponse(error_message)
+        return JsonResponse({"status": "bad"}, status=500)
 
 def verify(request, hash_value):
     try:
@@ -53,8 +58,8 @@ def verify(request, hash_value):
         request.session["user"]=user.name
         user.email_verified = 1
         user.save()
-        cart = Cart.objects.create(user=user)
         verify_email.delete()
+        cart = Cart.objects.create(user=user)
 
         template = loader.get_template('verified.html')
         return HttpResponse(template.render())  
@@ -79,10 +84,10 @@ def resend(request):
             
             if created or not verify_email.hash:
                 verify_email.generate_unique_hash()
-                send_verification_email(email, verify_email.hash)  
+                send_verification_email(email, verify_email.hash)  # Call send_verification_email
             else:
                 verify_email.generate_unique_hash()
-                send_verification_email(email, verify_email.hash)  
+                send_verification_email(email, verify_email.hash)  # Call send_verification_email
                 
             return redirect("unverified")
         else:
@@ -130,7 +135,6 @@ def logout(request):
         return redirect("login")
     else:
         return redirect("login")
-
 
 def dash(request):
     if request.session.get("user"):

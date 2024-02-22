@@ -14,11 +14,8 @@ html,body{
 @media screen and (max-width:400px) {
     body{
         overflow: hidden;
-        padding: 20px;
+        margin: 20px;
         min-width: 400px;
-    }
-    .container{
-      scale: 1;  
     }
 }
 .top_bar{

@@ -17,6 +17,13 @@ html,body{
     background-repeat: no-repeat;
     background-size: contain;
 }
+@media screen and (max-width:400px) {
+    body{
+        overflow: hidden;
+        margin: 20px;
+        min-width: 400px;
+    }
+}
 .container > div{
     margin: auto;
 }

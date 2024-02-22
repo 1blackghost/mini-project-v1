@@ -3,18 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <title>Barcode Scanner</title>
+  <link rel="stylesheet" href="../static/dash.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-  <h1>Welcome , {{user}}</h1>
-  <div id="scanner-container">
-    <video id="barcode-scanner" width="50%" height="30%" autoplay playsinline></video>
+
+  <div class="container">
+    <nav>
+      <button id="ham" onclick="ham()"><i class="fa fa-reorder"></i></button>
+      <img src="../static/images/Logo.png" class="logo"/>
+      <div class="options" id="options" style="width:0px ;">
+        <img class="profile" src="../static/images/prof.jpg"/>
+        <h1>{{user}}</h1>
+        <button><i class="fa fa-home"></i> Home</button>
+        <button><i class="fa fa-qrcode"></i> Scan Barcode</button>
+        <button><i class="fa fa-shopping-cart"></i> My Cart</button>
+        <button><i class="fa fa-sign-out"></i> Logout</button>
+      </div>
+    </nav>
+    <div id="home" style="display: none;">
+    <h1>Hello, {{user}}</h1>
+
+    <span class="search">
+      <p>Find Your Way</p>
+      <button onclick="popup(1)"><i class="fa fa-search"></i>Search 'addidas store'</button>
+    </span>
+    <h2>Upto 40% off</h2>
+    <img src="../static/images/poster.png"/>
+  </div>
+  <div class="search_popup" id="search_popup" style="height: 0svh;">
+    <input placeholder="Search" type="text" autofocus/>
+    <button onclick="popup(0)">╳</button>
+    <span>return result here</span>
+  </div>
+  <div id="scanner" style="display: flex;">
+    <h1>Scan Barcode</h1>
+    <video id="barcode-scanner" width="350px" autoplay playsinline></video>
     <canvas id="canvas" style="display: none;"></canvas>
+    <button id="openScanner">Open Scanner</button>
+  </div>
+
+  </div>
+  <!-- <h1>Welcome , {{user}}</h1>
+  <div id="scanner-container">
+    
   </div>
   <div id="result"></div>
-  <button id="openScanner">Open Scanner</button>
+  
   <button id="logout">Logout</button>
-  <button id="cart">Cart</button>
+  <button id="cart">Cart</button> -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
@@ -87,6 +126,32 @@
       window.location.href="/logout";
     });
   });
+  function popup(flag){
+    var pop=document.getElementById("search_popup");
+
+    if(flag){
+      pop.style.height="100svh"
+    }
+    else{
+      pop.style.height="0svh"
+    }
+  }
+  
+  function ham(){
+    var op=document.getElementById("options");
+    var ham=document.getElementById("ham");
+
+    if(op.style.width == "250px"){
+      op.style.width = "0px";
+      op.style.opacity = "0";
+      ham.style.transform="translate(0px)"
+    }
+    else{
+      op.style.width="250px";
+      op.style.opacity = "1"
+      ham.style.transform="translate(200px)"
+    }
+  }
 </script>
 
 </body>

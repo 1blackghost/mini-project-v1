@@ -6,7 +6,7 @@ html,body{
 }
 .container{
     width:400px;
-    height: 100svh;
+    height: fit-content;
     margin: auto;
     background-color: white;
     scale: 1;
@@ -16,6 +16,13 @@ html,body{
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: contain;
+}
+@media screen and (max-width:400px) {
+    body{
+        overflow: hidden;
+        margin: 20px;
+        min-width: 400px;
+    }
 }
 .container > div{
     margin: auto;

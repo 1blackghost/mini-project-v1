@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.98, user-scalable=no">
     <title>Sign In</title>
     <link rel="stylesheet" href="/static/login_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -26,6 +26,8 @@
         <span>
             Password
             <input type="password" placeholder="Enter your password" id="password" name="password" required>
+            <button type="button" id="see" onclick="togglePasswordVisibility()">
+                <img id="eye" src="/static/images/eye normal.png"/></button>
             <a href="#">Forgot Password?</a>
         </span>
         <button type="submit" class="signin-button">Sign In</button>
@@ -38,14 +40,14 @@
 <script>
     function togglePasswordVisibility() {
         var passwordField = document.getElementById("password");
-        var passwordToggle = document.querySelector(".password-toggle");
+        var passwordToggle = document.querySelector("#eye");
 
         if (passwordField.type === "password") {
             passwordField.type = "text";
             passwordToggle.src = "/static/images/eye.png";
         } else {
             passwordField.type = "password";
-            passwordToggle.src = "/static/images/eye%20X.png";
+            passwordToggle.src = "/static/images/eye normal.png";
         }
     }
 

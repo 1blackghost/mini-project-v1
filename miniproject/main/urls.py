@@ -27,5 +27,7 @@ urlpatterns = [
     path("unverified",views.unverified,name="unverified"),
     path("resend",views.resend,name="resend"),
     path("verify/<str:hash_value>",views.verify,name="verify"),
-    path("cart/<str:value>",views.cart,name="cart"),
+    path("cart/<str:value>/<int:qu>",views.cart,name="cart"),
+    path("delete/<str:value>/<int:qu>",views.delete,name="delete"),
+    path("edit/<str:value>/<int:qu>",views.edit,name="edit"),
 ]

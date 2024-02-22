@@ -40,7 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'corsheaders',
 ]
+
+
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

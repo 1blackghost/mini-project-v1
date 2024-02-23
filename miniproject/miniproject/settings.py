@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://example.com",
+    "https://f841-2409-4073-4d81-bd4c-d086-3038-626f-1114.ngrok-free.app",
 ]
 
 

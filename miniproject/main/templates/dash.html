@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Barcode Scanner</title>
-  <link rel="stylesheet" href="../static/dash.css">
+  <link rel="stylesheet" href="/static/dash.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -11,50 +11,59 @@
 <body>
 
   <div class="container">
+
+
     <nav>
       <button id="ham" onclick="ham()"><i class="fa fa-reorder"></i></button>
-      <img src="../static/images/Logo.png" class="logo"/>
+      <img src="/static/images/Logo.png" class="logo"/>
       <div class="options" id="options" style="width:0px ;">
-        <img class="profile" src="../static/images/prof.jpg"/>
+        <img class="profile" src="/static/images/prof.jpg"/>
         <h1>{{user}}</h1>
-        <button><i class="fa fa-home"></i> Home</button>
-        <button><i class="fa fa-qrcode"></i> Scan Barcode</button>
-        <button><i class="fa fa-shopping-cart"></i> My Cart</button>
-        <button><i class="fa fa-sign-out"></i> Logout</button>
+        <button id="home" onclick="navi('home','homediv')"><i class="fa fa-home"></i> Home</button>
+        <button id="scan" onclick="navi('scan','scanner')"><i class="fa fa-qrcode"></i> Scan Barcode</button>
+        <button id="cart" onclick="navi('cart','cartdiv')"><i class="fa fa-shopping-cart"></i> My Cart</button>
+        <button id="logout" onclick="navi('logout')"><i class="fa fa-sign-out"></i> Logout</button>
       </div>
     </nav>
-    <div id="home" style="display: none;">
-    <h1>Hello, {{user}}</h1>
 
+
+    <div id="homediv" style="display: flex;">
+    <h1>Hello, {{user}}</h1>
     <span class="search">
       <p>Find Your Way</p>
       <button onclick="popup(1)"><i class="fa fa-search"></i>Search 'addidas store'</button>
     </span>
     <h2>Upto 40% off</h2>
-    <img src="../static/images/poster.png"/>
+    <img src="/static/images/poster.png"/>
+
+    <div class="search_popup" id="search_popup" style="height: 0svh;">
+      <input placeholder="Search" type="text" autofocus/>
+      <button onclick="popup(0)">╳</button>
+      <span>return result here</span>
+    </div>
+
   </div>
-  <div class="search_popup" id="search_popup" style="height: 0svh;">
-    <input placeholder="Search" type="text" autofocus/>
-    <button onclick="popup(0)">╳</button>
-    <span>return result here</span>
-  </div>
-  <div id="scanner" style="display: flex;">
+
+
+  <div id="scanner" style="display: none;">
     <h1>Scan Barcode</h1>
     <video id="barcode-scanner" width="350px" autoplay playsinline></video>
     <canvas id="canvas" style="display: none;"></canvas>
     <button id="openScanner">Open Scanner</button>
+    <div class="overlay" id="overlay" style="display:none ;">
+      <div class="box">
+        <p id="result">apple</p>
+        <input placeholder="Enter Quantity '3'" type="number" id="quantity" maxlength="100" minlength="0"/>
+        <span><button id="add_cart">Add To Cart</button><button id="cancel">Cancel</button></span>
+      </div>
+    </div>
   </div>
 
+
+  <div id="cartdiv"></div>
+  <div id="map"></div>
   </div>
-  <!-- <h1>Welcome , {{user}}</h1>
-  <div id="scanner-container">
-    
-  </div>
-  <div id="result"></div>
   
-  <button id="logout">Logout</button>
-  <button id="cart">Cart</button> -->
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
  <script>
@@ -107,7 +116,8 @@
               }
 
               if (result.codeResult && result.codeResult.code) {
-                document.getElementById('result').innerHTML += `Detected barcode: ${result.codeResult.code}`;
+                document.getElementById("overlay").style.display="block"
+                document.getElementById('result').innerHTML += `${result.codeResult.code}`;
                 window.location.href = encodeURIComponent(result.codeResult.code);
 
                 Quagga.stop();
@@ -136,7 +146,26 @@
       pop.style.height="0svh"
     }
   }
-  
+  function navi(a,ele){
+    var o=["home","cart","scan","logout"];
+    var e=["homediv","scanner","cartdiv","map"];
+    var op=document.getElementById("options");
+    var ham=document.getElementById("ham");
+
+    for(let i=0;i<=o.length-1;i++){
+      document.getElementById(e[i]).style.display="none";
+      document.getElementById(o[i]).style.backgroundColor="transparent";
+      document.getElementById(o[i]).style.color="black";
+    }
+
+    document.getElementById(a).style.backgroundColor="#e8170023";
+    document.getElementById(a).style.color="#e81700";
+    document.getElementById(ele).style.display="flex";
+    op.style.width = "0px";
+      op.style.opacity = "0";
+      ham.style.transform="translate(0px)"
+
+  }
   function ham(){
     var op=document.getElementById("options");
     var ham=document.getElementById("ham");

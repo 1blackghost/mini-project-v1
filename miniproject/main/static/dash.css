@@ -6,7 +6,7 @@ html,body{
     --font:"Poppins", sans-serif;
 }
 .container{
-    width:400px;
+    width:100vw;
     height: fit-content;
     margin:10px auto;
     background-color: transparent;
@@ -14,7 +14,16 @@ html,body{
     flex-direction: column;
     overflow: hidden;
 }
-
+@media screen and (max-width:400px) {
+    body{
+        overflow: hidden;
+        margin: 20px;
+        min-width: 400px;
+    }
+    .container{
+        width: 400px;
+    }
+}
 nav{
     height: 50px;
     width:100%;
@@ -107,14 +116,14 @@ h1{
     border-bottom: 1px solid rgb(198, 198, 198);
 }
 .search > button{
-    width: calc(100% - 15px);
+    width: 400px;
     height: 40px;
     background-color: rgb(231, 231, 231);
     border: 0;
     outline: 0;
     text-align: left;
     border-radius: 5px;
-    margin: 10px auto;
+    margin: 10px;
     padding: 0px 10px;
     color: rgb(100, 100, 100);
     font-family: var(--font);
@@ -135,7 +144,7 @@ h2{
     margin-top: 5px;
 }
 .search_popup{
-    width: 400px;
+    width: 100vw;
     bottom: 0;
     background-color: white;
     position: absolute;
@@ -145,6 +154,7 @@ h2{
     flex-direction: column;
     z-index: 150;
 }
+
 .search_popup > input{
     height: 40px;
     width:calc(100% - 40px) ;
@@ -172,14 +182,96 @@ h2{
     color: grey;
 }
 video{
-    border: 3px solid black;
-    margin: auto;
     height: fit-content;
     border-radius: 5px;
+    margin: auto;
+}
+.overlay{
+    width: 400px;
+    height:100%;
+    background-color: rgba(0, 0, 0, 0.124);
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: 0;
+    z-index: 200;
+}
+.box{
+    width: 300px;
+    height: fit-content;
+    background-color: white;
+    border: 1px solid gray;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.box > p{
+    text-align: center;
+    font-weight: bold;
+    font-family: var(--font);
+    font-size: 18px;
+    text-transform: capitalize;
+
+}
+.box > input{
+    width: 200px;
+    height: 20px;
+    border: 0;
+    outline: 0;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 10px;
+    border-bottom: 3px solid #e81900;
+    margin: auto;
+    font-family: var(--font);
+    font-size: 15px;
+}
+.box > span{
+    display: flex;
+    flex-direction: row;
+margin: 15px;
+}
+#add_cart, #cancel{
+    width: 120px;
+    height: 40px;
+    margin: auto;
+    background-color: #e81900;
+    color: white;
+    border: 0;
+    outline: 0;
+    border-radius: 5px;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: bold;
+}
+#cancel{
+    background-color: white;
+    color: #e81900;
+    border: 2px solid #e81900;
+}
+#homediv{
+    flex-direction: column;
+}
+#homediv > img{
+    width: 400px;
+    margin: 0px 10px;
 }
 #home{
-    flex-direction: column;
+    background-color: #e8170023;
+    color: #e81900;
 }
 #scanner{
     flex-direction: column;
+}
+#scanner > button{
+    margin: 10px auto;
+    width: 125px;
+    height: 40px;
+    font-family: var(--font);
+    outline: 0;
+    border: 0;
+    background-color: #e81900;
+    border-radius: 5px;
+    color: white;
+    font-size: 15px;
 }

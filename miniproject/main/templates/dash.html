@@ -33,7 +33,7 @@
       <p>Find Your Way</p>
       <button onclick="popup(1)"><i class="fa fa-search"></i>Search 'addidas store'</button>
     </span>
-    <h2>Upto 40% off</h2>
+    <h1>Upto 40% off</h1>
     <img src="/static/images/poster.png"/>
 
     <div class="search_popup" id="search_popup" style="height: 0svh;">
@@ -52,7 +52,7 @@
     <button id="openScanner">Open Scanner</button>
     <div class="overlay" id="overlay" style="display:none ;">
       <div class="box">
-        <p id="result">apple</p>
+        <p id="result"></p>
         <input placeholder="Enter Quantity '3'" type="number" id="quantity" maxlength="100" minlength="0"/>
         <span><button id="add_cart">Add To Cart</button><button id="cancel">Cancel</button></span>
       </div>
@@ -60,7 +60,29 @@
   </div>
 
 
-  <div id="cartdiv"></div>
+  <div id="cartdiv" style="display: none;">
+    <h1>My Cart</h1>
+    <div class="products_list">
+
+      <span id="product">
+        <img src="/static/images/apple.jpg">
+        <span class="product_name">
+          <h2>Apple</h2>
+          <p>fresh apples</p>
+          <button><i class="fa fa-trash"></i></button>
+          <span id="price">$90</span>
+        </span>
+      </span>
+
+    </div>
+
+    <span class="button_array">
+      <button class="add_items" onclick="navi('scan','scanner')">+ Add Items</button>
+      <button class="checkout">Pay Now</button>
+    </span>
+  </div>
+
+
   <div id="map"></div>
   </div>
   

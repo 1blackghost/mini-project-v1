@@ -135,16 +135,15 @@ h1{
 }
 h2{
     margin: 0px 10px;
-    font-size: 20px;
+    font-size: 18px;
     font-family: var(--font);
-    color:#e81900;
+    color:#000000;
     font-weight: 600;
     text-align: left;
-    margin-bottom: 15px;
     margin-top: 5px;
 }
 .search_popup{
-    width: 100vw;
+    width: 400px;
     bottom: 0;
     background-color: white;
     position: absolute;
@@ -156,8 +155,8 @@ h2{
 }
 
 .search_popup > input{
-    height: 40px;
-    width:calc(100% - 40px) ;
+    height: 50px;
+    width:100%;
     padding: 5px;
     border: 0;
     outline: 0;
@@ -229,7 +228,7 @@ video{
 .box > span{
     display: flex;
     flex-direction: row;
-margin: 15px;
+    margin: 15px;
 }
 #add_cart, #cancel{
     width: 120px;
@@ -249,19 +248,96 @@ margin: 15px;
     color: #e81900;
     border: 2px solid #e81900;
 }
-#homediv{
+#homediv,#scanner,#cartdiv{
     flex-direction: column;
+    width: 400px;
+    margin: auto;
+    overflow: hidden;
+}
+.products_list{
+    width: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px);
+    border-radius: 10px;
+    margin: 10px;
+    background-color: white;
+}
+#product{
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    margin: 5px;
+    box-shadow: 1px 1px 5px rgb(161, 161, 161);
+    overflow: hidden;
+}
+.product_name{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.product_name > p{
+    font-family:var(--font) ;
+    color: grey;
+    margin: 0px 10px;
+    font-size: 14px;
+}
+#product > img{
+    height: 90px;
+    width: fit-content;
+    margin: 5px;
+    border-radius: 5px;
+}
+#product > .product_name > button{
+    width: 45px;
+    height: 45px;
+    margin-left: auto;
+    font-size: 20px;
+    border-radius: 0px 10px 0px 10px;
+    outline: 0;
+    border: 0;
+    background-color: #e81900;
+    color: white;
+    margin-top: -52px;
+}
+#price{
+    margin: 10px;
+    margin-top: auto;
+    font-family: var(--font);
+    font-size: 18px;
+    color: #e81900;
+    font-weight: bold;
 }
 #homediv > img{
     width: 400px;
     margin: 0px 10px;
 }
+.button_array{
+    display: flex;
+    flex-direction: row
+}
+.add_items,.checkout{
+    width: 100%;
+    margin: 0px 10px;
+    height: 50px;
+    border: 0;
+    outline: 0;
+    border-radius: 10px;
+    background-color: #e81900;
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+
+}
+.checkout{
+    background-color: white;
+    color: #e81900;
+    border: 3px solid #e81900;
+}
 #home{
     background-color: #e8170023;
     color: #e81900;
-}
-#scanner{
-    flex-direction: column;
 }
 #scanner > button{
     margin: 10px auto;

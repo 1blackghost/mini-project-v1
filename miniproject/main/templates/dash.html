@@ -17,8 +17,8 @@
       <button id="ham" onclick="ham()"><i class="fa fa-reorder"></i></button>
       <img src="/static/images/Logo.png" class="logo"/>
       <div class="options" id="options" style="width:0px ;">
-        <img class="profile" src="/static/images/prof.jpg"/>
-        <h1>{{user}}</h1>
+        <div class="profile" id="profile" onloadstart="lett()"></div>
+        <h1 id="user">{{user}}</h1>
         <button id="home" onclick="navi('home','homediv')"><i class="fa fa-home"></i> Home</button>
         <button id="scan" onclick="navi('scan','scanner')"><i class="fa fa-qrcode"></i> Scan Barcode</button>
         <button id="cart" onclick="navi('cart','cartdiv')"><i class="fa fa-shopping-cart"></i> My Cart</button>
@@ -27,7 +27,7 @@
     </nav>
 
 
-    <div id="homediv" style="display: flex;">
+    <div id="homediv" style="display: none;opacity: 1;">
     <h1>Hello, {{user}}</h1>
     <span class="search">
       <p>Find Your Way</p>
@@ -45,16 +45,24 @@
   </div>
 
 
-  <div id="scanner" style="display: none;">
+  <div id="scanner" style="display: flex;opacity: 1;">
     <h1>Scan Barcode</h1>
-    <video id="barcode-scanner" width="350px" autoplay playsinline></video>
+    <div id="cart_add_success" style="display: none;">Item added to cart</div>
+      <video id="barcode-scanner" width="350px" autoplay playsinline>
+    </video>
+    <!-- <span class="qr_align" id="qr_align">
+      <img src="../static/images/frame.png"/>
+    </span> -->
+    
     <canvas id="canvas" style="display: none;"></canvas>
     <button id="openScanner">Open Scanner</button>
     <div class="overlay" id="overlay" style="display:none ;">
       <div class="box">
         <p id="result"></p>
         <input placeholder="Enter Quantity '3'" type="number" id="quantity" maxlength="100" minlength="0"/>
-        <span><button id="add_cart" onclick="add_cart()">Add To Cart</button><button id="cancel">Cancel</button></span>
+        <span><button id="add_cart" onclick="add_cart()">Add To Cart</button>
+          <button id="cancel" onclick="
+            document.getElementById('overlay').style.display='none'">Cancel</button></span>
       </div>
     </div>
   </div>
@@ -81,6 +89,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
  <script>
+
+var t=document.getElementById("user").innerHTML;
+document.getElementById("profile").innerHTML=t[0];
+
 function fetchAndUpdateCart() {
     $.get("/getCart", function(data, status) {
         if (status === "success") {
@@ -155,6 +167,17 @@ $('#cart').click(function() {
     $.get("/cart/" +item +"/"+ quantity, function(data, status) {
         if (status === "success" && data.status === "ok") {
             console.log("Item added to cart successfully");
+            document.getElementById("cart_add_success").style.display="block";
+            setTimeout(()=>{
+              document.getElementById("cart_add_success").style.opacity=1;
+            },10)
+            setTimeout(()=>{
+              document.getElementById("cart_add_success").style.display="none";
+              setTimeout(()=>{
+              document.getElementById("cart_add_success").style.opacity=0;
+            },10)
+            },1000)
+            
         } else {
             console.log("Error adding item to cart");
         }
@@ -188,16 +211,22 @@ $('#cart').click(function() {
             readers: ['ean_reader', 'code_128_reader', 'code_39_reader', 'upc_reader'],
           },
         };
-
+        
         Quagga.init(config, function (err) {
           if (err) {
             console.error(err);
             return;
           }
+
+          var he=document.getElementById("barcode-scanner").offsetHeight-5;
+          document.getElementById("qr_align").style.height=he + "px";
+
           Quagga.start();
           scannerStarted = true; 
+          
           Quagga.onProcessed((result) => {
             const drawingCanvas = Quagga.canvas.ctx.overlay;
+
             if (result) {
               if (result.boxes) {
                 drawingCanvas.clearRect(0, 0, parseInt(drawingCanvas.canvas.width), parseInt(drawingCanvas.canvas.height));
@@ -212,6 +241,9 @@ $('#cart').click(function() {
 
               if (result.codeResult && result.codeResult.code) {
                 document.getElementById("overlay").style.display="block"
+                setTimeout(()=>{
+                  document.getElementById("overlay").style.opacity=1
+                })
                 document.getElementById('result').innerHTML += `${result.codeResult.code}`;
                 //window.location.href = encodeURIComponent(result.codeResult.code);
                 item=result.codeResult.code;
@@ -250,6 +282,7 @@ $('#cart').click(function() {
 
     for(let i=0;i<=o.length-1;i++){
       document.getElementById(e[i]).style.display="none";
+      document.getElementById(e[i]).style.opacity=0;
       document.getElementById(o[i]).style.backgroundColor="transparent";
       document.getElementById(o[i]).style.color="black";
     }
@@ -257,6 +290,9 @@ $('#cart').click(function() {
     document.getElementById(a).style.backgroundColor="#e8170023";
     document.getElementById(a).style.color="#e81700";
     document.getElementById(ele).style.display="flex";
+    setTimeout(()=>{
+      document.getElementById(ele).style.opacity=1;
+    })
     op.style.width = "0px";
       op.style.opacity = "0";
       ham.style.transform="translate(0px)"

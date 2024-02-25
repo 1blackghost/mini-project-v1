@@ -3,6 +3,7 @@ html,body{
 }
 :root{
     --font:"Poppins", sans-serif;
+    --primary:#e81900
 }
 .container{
     width:400px;
@@ -57,7 +58,7 @@ p{
     font-size: 20px;
     font-weight: 600;
     margin-top: 30px;
-    color: #e81900;
+    color: var(--primary);
 }
 .signin-form > span > input{
     border: 0;
@@ -65,7 +66,7 @@ p{
     font-size: 18px;
     padding:10px;
     margin-top: 10px;
-    border-bottom: 3px solid #e81900;
+    border-bottom: 3px solid var(--primary);
 }
 #pass::-ms-clear,#password::-ms-clear,#confirm::-ms-clear{
     display: none;
@@ -88,7 +89,7 @@ p{
 }
 .signin-form > p > a{
     text-decoration: none;
-    color:#e81900;
+    color:var(--primary);
    
 }
 #see{
@@ -109,7 +110,7 @@ p{
     font-family: var(--font);
     font-size: 25px;
     text-align: center;
-    background-color: #e81900;
+    background-color: var(--primary);
     font-weight: 600;
     margin-top: 15px;
     border-radius: 20px;

@@ -3,6 +3,7 @@ html,body{
 }
 :root{
     --font:"Poppins", sans-serif;
+    --primary:#e81900
 }
 .container{
     width:400px;
@@ -60,7 +61,7 @@ html,body{
     color: white;
 }
 .mail {
-    background-color: #e81900;
+    background-color: var(--primary);
 }
 .mail > i,.google > i{
     float: left;

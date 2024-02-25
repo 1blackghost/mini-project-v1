@@ -3,6 +3,7 @@ body{
 }
 :root{
     --font:"Poppins", sans-serif;
+    --primary:#e81900
 }
 .container{
     width: 400px;
@@ -27,7 +28,7 @@ body{
 .container > i{
     font-size: 50px;
     color:white;
-    background-color: #e81900;
+    background-color: var(--primary);
     height: 80px;
     width: 80px;
     border-radius: 1000px;
@@ -49,13 +50,13 @@ body{
 }
 .container > p >a{
     text-decoration: none;
-    color: #e81900;
+    color: var(--primary);
 }
 #resendButton{
     border:0;
     outline: 0;
     color: white;
-    background-color: #e81900;
+    background-color: var(--primary);
     width: 150px;
     height: 37.5px;
     border-radius: 5px;

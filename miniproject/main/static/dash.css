@@ -4,6 +4,7 @@ html,body{
 }
 :root{
     --font:"Poppins", sans-serif;
+    --primary:#e81900;
 }
 .container{
     width:100vw;
@@ -47,16 +48,22 @@ nav > button{
 }
 .profile{
     width: 75px;
+    height: 75px;
     border-radius: 200px;
     margin:10px;
     margin-top: 10px;
-
+    background-color: var(--primary);
+    font-size: 50px;
+    font-family: var(--font);
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
 }
 h1{
     margin-left: 10px;
     font-size: 18px;
     font-family: var(--font);
-    color:#e81900;
+    color:var(--primary);
     font-weight: 700;
 }
 .container > p{
@@ -107,7 +114,7 @@ h1{
     background-color: transparent;
 }
 .options > button:nth-child(1){
-    color: #e81900;
+    color: var(--primary);
 }
 .options > h1{
     margin-top: 0px;
@@ -160,7 +167,7 @@ h2{
     padding: 5px;
     border: 0;
     outline: 0;
-    border-bottom: 3px solid #e81900;
+    border-bottom: 3px solid var(--primary);
     font-family: var(--font);
     font-size: 18px;
 }
@@ -181,9 +188,35 @@ h2{
     color: grey;
 }
 video{
-    height: fit-content;
+    width: 350px;
+    min-height: 250px;
     border-radius: 5px;
     margin: auto;
+    z-index: -1;
+    border: 3px solid var(--primary);
+}
+.qr_align{
+    width: 345px;
+    height:250px;
+    position:absolute;
+    border: 3px solid var(--primary);
+    background-color: transparent;
+    margin: 25px;
+    margin-top: 50px;
+    border-radius: 5px;
+    z-index: 1;
+    display: flex;
+}
+.qr_align > img {
+    width: 200px;
+    margin:auto;
+    padding: 0;
+    border-left: 73px ;
+    border-right: 73px ;
+    border-top: 57px ;
+    border-bottom: 57px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.733);
 }
 .overlay{
     width: 400px;
@@ -193,6 +226,23 @@ video{
     position: absolute;
     top: 0;
     z-index: 200;
+    opacity: 0;
+    transition: 1s;
+}
+#cart_add_success{
+    width: 200px;
+    border-radius: 5px;
+    background-color: white;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 1px 1px 5px grey;
+    padding: 10px;
+    margin: 10px auto;
+    text-align: center;
+    color: green;
+    opacity: 0;
+    transition: 1s;
 }
 .box{
     width: 300px;
@@ -220,7 +270,7 @@ video{
     outline: 0;
     background-color: rgba(255, 255, 255, 0);
     padding: 10px;
-    border-bottom: 3px solid #e81900;
+    border-bottom: 3px solid var(--primary);
     margin: auto;
     font-family: var(--font);
     font-size: 15px;
@@ -234,7 +284,7 @@ video{
     width: 120px;
     height: 40px;
     margin: auto;
-    background-color: #e81900;
+    background-color: var(--primary);
     color: white;
     border: 0;
     outline: 0;
@@ -245,14 +295,16 @@ video{
 }
 #cancel{
     background-color: white;
-    color: #e81900;
-    border: 2px solid #e81900;
+    color: var(--primary);
+    border: 2px solid var(--primary);
 }
 #homediv,#scanner,#cartdiv{
     flex-direction: column;
     width: 400px;
     margin: auto;
     overflow: hidden;
+    opacity: 0;
+    transition: 1s;
 }
 .products_list{
     width: calc(100% - 20px);
@@ -296,7 +348,7 @@ video{
     border-radius: 0px 10px 0px 10px;
     outline: 0;
     border: 0;
-    background-color: #e81900;
+    background-color: var(--primary);
     color: white;
     margin-top: -52px;
 }
@@ -305,7 +357,7 @@ video{
     margin-top: auto;
     font-family: var(--font);
     font-size: 18px;
-    color: #e81900;
+    color: var(--primary);
     font-weight: bold;
 }
 #homediv > img{
@@ -323,7 +375,7 @@ video{
     border: 0;
     outline: 0;
     border-radius: 10px;
-    background-color: #e81900;
+    background-color: var(--primary);
     font-family: var(--font);
     font-size: 18px;
     font-weight: bold;
@@ -332,12 +384,12 @@ video{
 }
 .checkout{
     background-color: white;
-    color: #e81900;
-    border: 3px solid #e81900;
+    color: var(--primary);
+    border: 3px solid var(--primary);
 }
 #home{
     background-color: #e8170023;
-    color: #e81900;
+    color: var(--primary);
 }
 #scanner > button{
     margin: 10px auto;
@@ -346,7 +398,7 @@ video{
     font-family: var(--font);
     outline: 0;
     border: 0;
-    background-color: #e81900;
+    background-color: var(--primary);
     border-radius: 5px;
     color: white;
     font-size: 15px;

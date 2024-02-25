@@ -54,7 +54,7 @@
       <div class="box">
         <p id="result"></p>
         <input placeholder="Enter Quantity '3'" type="number" id="quantity" maxlength="100" minlength="0"/>
-        <span><button id="add_cart">Add To Cart</button><button id="cancel">Cancel</button></span>
+        <span><button id="add_cart" onclick="add_cart()">Add To Cart</button><button id="cancel">Cancel</button></span>
       </div>
     </div>
   </div>
@@ -62,14 +62,14 @@
 
   <div id="cartdiv" style="display: none;">
     <h1>My Cart</h1>
-    <div class="products_list">
+    <div class="products_list" id="products_list">
 
       <span id="product">
         <img src="/static/images/apple.jpg">
         <span class="product_name">
           <h2>Apple</h2>
           <p>fresh apples</p>
-          <button><i class="fa fa-trash"></i></button>
+          <button id="delete"><i class="fa fa-trash"></i></button>
           <span id="price">$90</span>
         </span>
       </span>
@@ -89,6 +89,92 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
  <script>
+  // Function to fetch cart data and update UI
+function fetchAndUpdateCart() {
+    // Make AJAX GET request to retrieve cart data
+    $.get("/getCart", function(data, status) {
+        if (status === "success") {
+            updateProductList(data); // Update product list with cart data
+        } else {
+            console.log("Error fetching cart data");
+        }
+    }).fail(function() {
+        console.log("HTTP error occurred");
+    });
+}
+
+// Function to delete item from cart
+function deleteItemFromCart(itemName) {
+    // Make AJAX DELETE request to delete the item from the cart
+    $.ajax({
+        url: "/delete/" + encodeURIComponent(itemName), // Encode item name in URL
+        type: "GET",
+        success: function(data, status) {
+            if (status === "success" && data.status === "ok") {
+                console.log("Item deleted from cart successfully");
+                // Update cart list after successful deletion
+                fetchAndUpdateCart();
+            } else {
+                console.log("Error deleting item from cart");
+            }
+        },
+        error: function() {
+            console.log("HTTP error occurred");
+        }
+    });
+}
+
+$(document).on("click", "#delete", function() {
+  console.log("clicked")
+    var itemName = $(this).closest("#product").find(".product_name h2").text().trim();
+    deleteItemFromCart(itemName);
+});
+
+function updateProductList(cartData) {
+    var productsList = $('#products_list');
+    productsList.empty(); 
+    
+    cartData.cart.forEach(function(item) {
+
+        var productHTML = `
+        <span id="product">
+            <img src="/static/images/${item.item}.jpg">
+            <span class="product_name">
+                <h2>${item.item}</h2>
+                <p>Quantity: ${item.quantity}</p>
+                <button id="delete"><i class="fa fa-trash"></i></button>
+                <span id="price">$90</span>
+            </span>
+        </span>
+        `;
+        productsList.append(productHTML);
+    });
+}
+
+$('#cart').click(function() {
+    $.get("/getCart", function(data, status) {
+        if (status === "success") {
+            updateProductList(data);
+        } else {
+            console.log("Error fetching cart data");
+        }
+    }).fail(function() {
+        console.log("HTTP error occurred");
+    });
+});
+  var item = "";
+  function add_cart() {
+    var quantity = $('#quantity').val();
+    $.get("/cart/" +item +"/"+ quantity, function(data, status) {
+        if (status === "success" && data.status === "ok") {
+            console.log("Item added to cart successfully");
+        } else {
+            console.log("Error adding item to cart");
+        }
+    }).fail(function() {
+        console.log("HTTP error occurred");
+    });
+}
   document.addEventListener('DOMContentLoaded', async () => {
     const videoElement = document.getElementById('barcode-scanner');
     const canvas = document.getElementById('canvas');
@@ -140,7 +226,8 @@
               if (result.codeResult && result.codeResult.code) {
                 document.getElementById("overlay").style.display="block"
                 document.getElementById('result').innerHTML += `${result.codeResult.code}`;
-                window.location.href = encodeURIComponent(result.codeResult.code);
+                //window.location.href = encodeURIComponent(result.codeResult.code);
+                item=result.codeResult.code;
 
                 Quagga.stop();
                 scannerStarted = false; 

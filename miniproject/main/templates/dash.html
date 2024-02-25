@@ -89,12 +89,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
  <script>
-  // Function to fetch cart data and update UI
 function fetchAndUpdateCart() {
-    // Make AJAX GET request to retrieve cart data
     $.get("/getCart", function(data, status) {
         if (status === "success") {
-            updateProductList(data); // Update product list with cart data
+            updateProductList(data);
         } else {
             console.log("Error fetching cart data");
         }
@@ -103,16 +101,13 @@ function fetchAndUpdateCart() {
     });
 }
 
-// Function to delete item from cart
 function deleteItemFromCart(itemName) {
-    // Make AJAX DELETE request to delete the item from the cart
     $.ajax({
-        url: "/delete/" + encodeURIComponent(itemName), // Encode item name in URL
+        url: "/delete/" + encodeURIComponent(itemName), 
         type: "GET",
         success: function(data, status) {
             if (status === "success" && data.status === "ok") {
                 console.log("Item deleted from cart successfully");
-                // Update cart list after successful deletion
                 fetchAndUpdateCart();
             } else {
                 console.log("Error deleting item from cart");

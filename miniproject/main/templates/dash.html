@@ -64,15 +64,7 @@
     <h1>My Cart</h1>
     <div class="products_list" id="products_list">
 
-      <span id="product">
-        <img src="/static/images/apple.jpg">
-        <span class="product_name">
-          <h2>Apple</h2>
-          <p>fresh apples</p>
-          <button id="delete"><i class="fa fa-trash"></i></button>
-          <span id="price">$90</span>
-        </span>
-      </span>
+    
 
     </div>
 
@@ -138,7 +130,7 @@ function updateProductList(cartData) {
                 <h2>${item.item}</h2>
                 <p>Quantity: ${item.quantity}</p>
                 <button id="delete"><i class="fa fa-trash"></i></button>
-                <span id="price">$90</span>
+                <span id="price">$${item.price}</span>
             </span>
         </span>
         `;

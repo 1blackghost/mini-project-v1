@@ -190,6 +190,12 @@ $('#cart').click(function() {
     const canvas = document.getElementById('canvas');
     const canvasContext = canvas.getContext('2d');
     let scannerStarted = false; 
+    var ctx = canvas.getContext('2d');
+            ctx.canvas.mozPrintCallback = function (obj) {
+                obj.context = ctx;
+            };
+            ctx.canvas.willReadFrequently = true
+    
 
     document.getElementById('openScanner').addEventListener('click', async () => {
       try {
@@ -218,8 +224,8 @@ $('#cart').click(function() {
             return;
           }
 
-          var he=document.getElementById("barcode-scanner").offsetHeight-5;
-          document.getElementById("qr_align").style.height=he + "px";
+          //var he=document.getElementById("barcode-scanner").offsetHeight-5;
+          //document.getElementById("qr_align").style.height=he + "px";
 
           Quagga.start();
           scannerStarted = true; 

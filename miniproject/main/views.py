@@ -8,7 +8,6 @@ import time
 from .models import Verify_Email,Cart,CartItem
 
 
-array={"Apple":2,"Orange":3,"Book":10,"Cookies":1}
 
 def get_cart(request):
     user = request.session.get("user")
@@ -19,24 +18,30 @@ def get_cart(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+
 def cart(request, value, qu):
     user = request.session.get("user")
     try:
         cart, created = Cart.objects.get_or_create(user=user)
-        
+        value=value.lower()
         qu = int(qu)
         
-        if value in array and qu > 0:
-            price = qu * array[value]
-            cart.add_item(item_name=value, quantity=qu, price=price)
+        if qu > 0:
+            array={"apple":2,"orange":3,"book":10,"cookies":1}
+            p = qu * array.get(value, 0)
+            cart.add_item(item_name=value, quantity=qu, price=p)
             cart.save()
-            return JsonResponse({"status": "ok"}, status=200)
+            if created:
+                return JsonResponse({"status": "ok", "message": "Item added to cart."}, status=200)
+            else:
+                return JsonResponse({"status": "ok", "message": "Item quantity updated in cart."}, status=200)
         else:
-            return JsonResponse({"status": "bad", "error": "Invalid item or quantity"}, status=400)
+            return JsonResponse({"status": "bad", "error": "Invalid quantity. Quantity must be greater than 0."}, status=400)
     except ValueError:
-        return JsonResponse({"status": "bad", "error": "Invalid quantity format"}, status=400)
+        return JsonResponse({"status": "bad", "error": "Invalid quantity format. Please provide a valid integer."}, status=400)
     except Exception as e:
         return JsonResponse({"status": "bad", "error": str(e)}, status=500)
+
 
 
 def delete(request, value):
@@ -55,7 +60,7 @@ def verify(request, hash_value):
         verify_email = Verify_Email.objects.get(hash=hash_value)
         user = User.objects.get(email=verify_email.email)
         request.session.clear()
-        request.session["user"]=user.name
+        request.session["user"]=user
         user.email_verified = 1
         user.save()
         verify_email.delete()
@@ -84,10 +89,10 @@ def resend(request):
             
             if created or not verify_email.hash:
                 verify_email.generate_unique_hash()
-                send_verification_email(email, verify_email.hash)  # Call send_verification_email
+                send_verification_email(email, verify_email.hash) 
             else:
                 verify_email.generate_unique_hash()
-                send_verification_email(email, verify_email.hash)  # Call send_verification_email
+                send_verification_email(email, verify_email.hash) 
                 
             return redirect("unverified")
         else:

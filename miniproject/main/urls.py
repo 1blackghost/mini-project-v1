@@ -16,18 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from . import views
+from . import authen_view,cart_view,nav_view
 
 urlpatterns = [
-    path("",views.index,name="index"),
-    path("login/",views.login,name="login"),
-    path("signup/",views.signup,name="signup"),
-    path("dash",views.dash,name="dash"),
-    path("logout",views.logout,name="logout"),
-    path("unverified",views.unverified,name="unverified"),
-    path("resend",views.resend,name="resend"),
-    path("verify/<str:hash_value>",views.verify,name="verify"),
-    path("cart/<str:value>/<int:qu>",views.cart,name="cart"),
-    path("delete/<str:value>",views.delete,name="delete"),
-    path("getCart",views.get_cart,name="get_cart")
+    path("",authen_view.index,name="index"),
+    path("login/",authen_view.login,name="login"),
+    path("signup/",authen_view.signup,name="signup"),
+    path("dash",authen_view.dash,name="dash"),
+    path("logout",authen_view.logout,name="logout"),
+    path("unverified",authen_view.unverified,name="unverified"),
+    path("resend",authen_view.resend,name="resend"),
+    path("verify/<str:hash_value>",authen_view.verify,name="verify"),
+    path("cart/<str:value>/<int:qu>",cart_view.cart,name="cart"),
+    path("delete/<str:value>",cart_view.delete,name="delete"),
+    path("getCart",cart_view.get_cart,name="get_cart"),
+    path("nav/<str:start>/<str:destination>",nav_view.nav,name="nav")
 ]

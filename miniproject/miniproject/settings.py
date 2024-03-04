@@ -30,7 +30,6 @@ ALLOWED_HOSTS = ["*"]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',

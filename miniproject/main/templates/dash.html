@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Barcode Scanner</title>
-  <link rel="stylesheet" href="/static/dash.css">
+  <link rel="stylesheet" href="../static/dash.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,8 +17,8 @@
       <button id="ham" onclick="ham()"><i class="fa fa-reorder"></i></button>
       <img src="/static/images/Logo.png" class="logo"/>
       <div class="options" id="options" style="width:0px ;">
-        <img class="profile" src="/static/images/prof.jpg"/>
-        <h1>{{user}}</h1>
+        <div class="profile" id="profile" onloadstart="lett()"></div>
+        <h1 id="user">{{user}}</h1>
         <button id="home" onclick="navi('home','homediv')"><i class="fa fa-home"></i> Home</button>
         <button id="scan" onclick="navi('scan','scanner')"><i class="fa fa-qrcode"></i> Scan Barcode</button>
         <button id="cart" onclick="navi('cart','cartdiv')"><i class="fa fa-shopping-cart"></i> My Cart</button>
@@ -27,7 +27,7 @@
     </nav>
 
 
-    <div id="homediv" style="display: flex;">
+    <div id="homediv" style="display: flex;opacity: 1;">
     <h1>Hello, {{user}}</h1>
     <span class="search">
       <p>Find Your Way</p>
@@ -47,14 +47,22 @@
 
   <div id="scanner" style="display: none;">
     <h1>Scan Barcode</h1>
-    <video id="barcode-scanner" width="350px" autoplay playsinline></video>
-    <canvas id="canvas" style="display: none;"></canvas>
+    <div id="cart_add_success" style="display: none;">Item added to cart</div>
+      <video id="barcode-scanner" width="350px" autoplay playsinline>
+    </video>
+    <!-- <span class="qr_align" id="qr_align">
+      <img src="../static/images/frame.png"/>
+    </span> -->
+    
+    <canvas id="canvas" style="display: none;" willReadFrequently></canvas>
     <button id="openScanner">Open Scanner</button>
-    <div class="overlay" id="overlay" style="display:none ;">
+    <div class="overlay" id="overlay" style="display:none;">
       <div class="box">
         <p id="result"></p>
         <input placeholder="Enter Quantity '3'" type="number" id="quantity" maxlength="100" minlength="0"/>
-        <span><button id="add_cart">Add To Cart</button><button id="cancel">Cancel</button></span>
+        <span><button id="add_cart" onclick="add_cart()">Add To Cart</button>
+          <button id="cancel" onclick="
+            document.getElementById('overlay').style.display='none'">Cancel</button></span>
       </div>
     </div>
   </div>
@@ -62,17 +70,9 @@
 
   <div id="cartdiv" style="display: none;">
     <h1>My Cart</h1>
-    <div class="products_list">
+    <div class="products_list" id="products_list">
 
-      <span id="product">
-        <img src="/static/images/apple.jpg">
-        <span class="product_name">
-          <h2>Apple</h2>
-          <p>fresh apples</p>
-          <button><i class="fa fa-trash"></i></button>
-          <span id="price">$90</span>
-        </span>
-      </span>
+    
 
     </div>
 
@@ -89,11 +89,109 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
  <script>
+
+var t=document.getElementById("user").innerHTML;
+document.getElementById("profile").innerHTML=t[0];
+
+function fetchAndUpdateCart() {
+    $.get("/getCart", function(data, status) {
+        if (status === "success") {
+            updateProductList(data);
+        } else {
+            console.log("Error fetching cart data");
+        }
+    }).fail(function() {
+        console.log("HTTP error occurred");
+    });
+}
+
+function deleteItemFromCart(itemName) {
+    $.ajax({
+        url: "/delete/" + encodeURIComponent(itemName), 
+        type: "GET",
+        success: function(data, status) {
+            if (status === "success" && data.status === "ok") {
+                console.log("Item deleted from cart successfully");
+                fetchAndUpdateCart();
+            } else {
+                console.log("Error deleting item from cart");
+            }
+        },
+        error: function() {
+            console.log("HTTP error occurred");
+        }
+    });
+}
+
+$(document).on("click", "#delete", function() {
+  console.log("clicked")
+    var itemName = $(this).closest("#product").find(".product_name h2").text().trim();
+    deleteItemFromCart(itemName);
+});
+
+function updateProductList(cartData) {
+    var productsList = $('#products_list');
+    productsList.empty(); 
+    
+    cartData.cart.forEach(function(item) {
+
+        var productHTML = `
+        <span id="product">
+            <img src="/static/images/${item.item}.jpg">
+            <span class="product_name">
+                <h2>${item.item}</h2>
+                <p>Quantity: ${item.quantity}</p>
+                <button id="delete"><i class="fa fa-trash"></i></button>
+                <span id="price">$${item.price}</span>
+            </span>
+        </span>
+        `;
+        productsList.append(productHTML);
+    });
+}
+
+$('#cart').click(function() {
+    $.get("/getCart", function(data, status) {
+        if (status === "success") {
+            updateProductList(data);
+        } else {
+            console.log("Error fetching cart data");
+        }
+    }).fail(function() {
+        console.log("HTTP error occurred");
+    });
+});
+  var item = "";
+  function add_cart() {
+    var quantity = $('#quantity').val();
+    $.get("/cart/" +item +"/"+ quantity, function(data, status) {
+        if (status === "success" && data.status === "ok") {
+            console.log("Item added to cart successfully");
+            document.getElementById("cart_add_success").style.display="block";
+            setTimeout(()=>{
+              document.getElementById("cart_add_success").style.opacity=1;
+              document.getElementById("overlay").style.display="none";
+            },10)
+            setTimeout(()=>{
+              document.getElementById("cart_add_success").style.display="none";
+              setTimeout(()=>{
+              document.getElementById("cart_add_success").style.opacity=0;
+            },10)
+            },1000)
+            
+        } else {
+            console.log("Error adding item to cart");
+        }
+    }).fail(function() {
+        console.log("HTTP error occurred");
+    });
+}
   document.addEventListener('DOMContentLoaded', async () => {
     const videoElement = document.getElementById('barcode-scanner');
     const canvas = document.getElementById('canvas');
     const canvasContext = canvas.getContext('2d');
     let scannerStarted = false; 
+
 
     document.getElementById('openScanner').addEventListener('click', async () => {
       try {
@@ -115,16 +213,22 @@
             readers: ['ean_reader', 'code_128_reader', 'code_39_reader', 'upc_reader'],
           },
         };
-
+        
         Quagga.init(config, function (err) {
           if (err) {
             console.error(err);
             return;
           }
+
+          //var he=document.getElementById("barcode-scanner").offsetHeight-5;
+          //document.getElementById("qr_align").style.height=he + "px";
+
           Quagga.start();
           scannerStarted = true; 
+          
           Quagga.onProcessed((result) => {
             const drawingCanvas = Quagga.canvas.ctx.overlay;
+
             if (result) {
               if (result.boxes) {
                 drawingCanvas.clearRect(0, 0, parseInt(drawingCanvas.canvas.width), parseInt(drawingCanvas.canvas.height));
@@ -139,8 +243,12 @@
 
               if (result.codeResult && result.codeResult.code) {
                 document.getElementById("overlay").style.display="block"
+                setTimeout(()=>{
+                  document.getElementById("overlay").style.opacity=1
+                })
                 document.getElementById('result').innerHTML += `${result.codeResult.code}`;
-                window.location.href = encodeURIComponent(result.codeResult.code);
+                //window.location.href = encodeURIComponent(result.codeResult.code);
+                item=result.codeResult.code;
 
                 Quagga.stop();
                 scannerStarted = false; 
@@ -176,6 +284,7 @@
 
     for(let i=0;i<=o.length-1;i++){
       document.getElementById(e[i]).style.display="none";
+      document.getElementById(e[i]).style.opacity=0;
       document.getElementById(o[i]).style.backgroundColor="transparent";
       document.getElementById(o[i]).style.color="black";
     }
@@ -183,6 +292,9 @@
     document.getElementById(a).style.backgroundColor="#e8170023";
     document.getElementById(a).style.color="#e81700";
     document.getElementById(ele).style.display="flex";
+    setTimeout(()=>{
+      document.getElementById(ele).style.opacity=1;
+    })
     op.style.width = "0px";
       op.style.opacity = "0";
       ham.style.transform="translate(0px)"

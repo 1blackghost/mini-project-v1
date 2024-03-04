@@ -3,19 +3,16 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send_verification_email(receiver_address, verification_link):
-    # Email configuration
-    sender_address = 'your_email@gmail.com'  # Enter your email address
+    sender_address = 'your_email@gmail.com'  
     sender_password = "cjnr ptgo cooi wvrj"
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
 
-    # Create message container
     msg = MIMEMultipart()
     msg['From'] = sender_address
     msg['To'] = receiver_address
     msg['Subject'] = 'Email Verification'
 
-    # Email body
     email_body = f"""
     <html>
     <body>
@@ -28,26 +25,20 @@ def send_verification_email(receiver_address, verification_link):
     </html>
     """
 
-    # Attach email body as HTML
     msg.attach(MIMEText(email_body, 'html'))
 
     try:
-        # Create SMTP session
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
-        # Login to SMTP server
         server.login(sender_address, sender_password)
-        # Send email
         server.sendmail(sender_address, receiver_address, msg.as_string())
         print('Email sent successfully')
     except Exception as e:
         print(f'Error: Unable to send email. {e}')
     finally:
-        # Close SMTP session
         server.quit()
 
-# Example usage:
-receiver_email = 'ashishjosephp666@gmail.com'  # Enter recipient's email address
-verification_link = 'ashishjosephnew@gmail.com'  # Example verification link
+receiver_email = 'ashishjosephp666@gmail.com'  
+verification_link = 'ashishjosephnew@gmail.com'  
 send_verification_email(receiver_email, verification_link)
 

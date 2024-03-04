@@ -30,7 +30,6 @@ ALLOWED_HOSTS = ["*"]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,7 +44,7 @@ INSTALLED_APPS = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://f841-2409-4073-4d81-bd4c-d086-3038-626f-1114.ngrok-free.app",
+    "http://127.0.0.1:8000",
 ]
 
 

@@ -36,14 +36,13 @@ class Cart(models.Model):
     def __str__(self):
         return f"Cart for {self.user.username}"
 
-    def add_item(self, item_name, quantity=1, price=0):
+    def add_item(self, item_name, quantity,price):
         existing_item = self.cartitem_set.filter(item=item_name).first()
 
         if existing_item:
             existing_item.quantity += quantity
-            existing_item.price+=price
+            existing_item.price += price 
             existing_item.save()
-        
         else:
             CartItem.objects.create(cart=self, item=item_name, quantity=quantity, price=price)
 
@@ -53,6 +52,7 @@ class Cart(models.Model):
     def get_quantity(self, item_name):
         item = self.cartitem_set.filter(item=item_name).first()
         return item.quantity if item else 0
+
 
 
 class CartItem(models.Model):

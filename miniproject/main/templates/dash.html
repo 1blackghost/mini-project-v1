@@ -69,7 +69,7 @@
       <img src="../static/images/frame.png"/>
     </span> -->
     
-    <canvas id="canvas" style="display: none;"></canvas>
+    <canvas id="canvas" style="display: none;" willReadFrequently></canvas>
     <button id="openScanner">Open Scanner</button>
     <div class="overlay" id="overlay" style="display:none;">
       <div class="box">
@@ -221,7 +221,6 @@ $('#cart').click(function() {
             setTimeout(()=>{
               document.getElementById("cart_add_success").style.opacity=1;
               document.getElementById("overlay").style.display="none";
-              document.getElementById("overlay").style.opacity=0;
             },10)
             setTimeout(()=>{
               document.getElementById("cart_add_success").style.display="none";
@@ -242,12 +241,7 @@ $('#cart').click(function() {
     const canvas = document.getElementById('canvas');
     const canvasContext = canvas.getContext('2d');
     let scannerStarted = false; 
-    var ctx = canvas.getContext('2d');
-            ctx.canvas.mozPrintCallback = function (obj) {
-                obj.context = ctx;
-            };
-            ctx.canvas.willReadFrequently = true
-    
+
 
     document.getElementById('openScanner').addEventListener('click', async () => {
       try {

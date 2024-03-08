@@ -37,24 +37,15 @@
     <img src="/static/images/poster.png"/>
 
     <div class="search_popup" id="search_popup" style="height: 100svh;">
-      <input placeholder="Search" type="text" autofocus/>
-      <button onclick="popup(0)">╳</button>
+      <input placeholder="From" id="from" type="text" onkeydown="autocomp('from')" autofocus/>
+      <span class="search_result" id="result">
+      </span>
+      <input placeholder="To" id="to" type="text"/>
+      <!-- <button onclick="popup(0)">╳</button> -->
       <div>
-      <select id="places">
-        <option value="toilet">toilet</option>
-        <option value="fountain">fountain</option>
-        <option value="stair">stairs</option>
-        <option value="cafe">cafe</option>
-        <option value="unkn">rest room</option>
-        <option value="adidas">adidas</option>
-        <option value="jockey">jockey</option>
-        <option value="louis">louis</option>
-        <option value="childcorner">childcorner</option>
-        <option value="zudio">zudio</option>
-      </select>
       <button onclick="navigat()">navigate</button>
     </div>
-      <canvas id="map" width="350" height="400" style="margin-top: 40px;background-color: rgb(255, 255, 255);"></canvas>
+      <canvas id="map" width="350" height="400" style="background-color: rgb(255, 255, 255);"></canvas>
     </div>
 
   </div>
@@ -65,9 +56,6 @@
     <div id="cart_add_success" style="display: none;">Item added to cart</div>
       <video id="barcode-scanner" width="350px" autoplay playsinline>
     </video>
-    <!-- <span class="qr_align" id="qr_align">
-      <img src="../static/images/frame.png"/>
-    </span> -->
     
     <canvas id="canvas" style="display: none;" willReadFrequently></canvas>
     <button id="openScanner">Open Scanner</button>
@@ -102,46 +90,46 @@
 
 
  <script>
-  let canvas = document.getElementById("map");
-    const can = canvas.getContext("2d");
-    let im=document.getElementById("image");
-    can.drawImage(im,25,0,300,400);
-function navigat(){
     let i;
     const canvas = document.getElementById("map");
     const can = canvas.getContext("2d");
-    canvas.width = canvas.width;
+    
     let im=document.getElementById("image");
     can.drawImage(im,25,0,300,400);
 
+    function navigat(){
+      let from=document.getElementById("from").value;
+      let to= document.getElementById("to").value;
 
-    var toilet=[[225,305],[100,305],[100,220],[150,220],[150,120],[190,120],[190,50],[220,50]]
-    var fountain=[[225,305],[100,305],[100,220],[150,220],[290,220],[290,190]];
-    var stair=[[225,305],[100,305],[100,220],[150,220],[150,110],[220,110]];
-    var cafe =[[225,305],[100,305],[100,220],[150,220],[150,150],[120,150]]
-    var unkn=[[225,305],[100,305],[100,220],[150,220],[150,150],[170,150]];
-    var adidas=[[225,305],[100,305],[100,220],[150,220],[150,90]];
-    var jockey=[[225,305],[100,305],[100,270],[85,270]];
-    var louis=[[225,305],[100,305],[100,270],[110,270]];
-    var childcorner=[[225,305],[240,305]];
-    var zudio=[[175,370]];
-
-    let end=document.getElementById("places").value;
-    var h=eval(end);
-
-    can.moveTo(225,370);
-    for(i=0;i<=h.length-1;i++){
-      can.lineTo(h[i][0],h[i][1]);
-      console.log(h[i][0])
-
+      $.get("/nav/"+from+"/"+to, function(data,status){
+        h=data.path;
+        canvas.width = canvas.width;
+        can.drawImage(im,25,0,300,400);
+        can.moveTo(h[0][0],h[0][1])
+        for(i=0;i<=h.length-1;i++){
+          can.lineTo(h[i][0],h[i][1]);
+          console.log(h[i][0],h[i][1])
+        }
+        can.strokeStyle="red";
+        can.stroke();
+      })
+      
     }
-    
-    can.strokeStyle="red";
-    can.stroke();
-    
-  }
+  
 var t=document.getElementById("user").innerHTML;
 document.getElementById("profile").innerHTML=t[0];
+
+// function autocomp(id){
+//   var possible=["toilet","fruits","shoes","stationary","tools","fishing","children"];
+//   let from=document.getElementById(id).value;
+//   var i,j;
+//   for(i=0;i<=possible.length;i++){
+//     if(possible[i][0]==from[0]){
+//       document.getElementById("result").innerHTML="<p>"+possible[i]+"</p>";
+//     }
+//   }
+  
+// }
 
 function fetchAndUpdateCart() {
     $.get("/getCart", function(data, status) {

@@ -3,25 +3,48 @@ import string
 import random
 
 class MallNavigator:
+
+
     def __init__(self):
         self.graph = nx.Graph()
-        self.data = {"entrance": (481,757 ,0), 
-                     "toilet": (320, 76,0),
-                     "food":(383,571,0),
-                     "stationary":(269,692,0),
-                     "hardware":(271,593,0),
-                     "c1":(309,598,0),
-                     "clothes":(70,607,0),
-                     "fruits":(112,418,0),
-                     "waiting room":(390,416,0),
-                     "fountain":(458,397,0),
-                     "c2":(206,412,0),
-                     "vegetables":(190,194,0),
-                     "stairs":(312,202,0),
-                     "toilet":(315,85,0),
-                     "c3":(408,250,0),
-                     "c4":(291,246,0),
-                     }
+        original_width = 512
+        original_height = 785
+
+        new_width = 350
+        new_height = 400
+
+        width_ratio = new_width / original_width
+        height_ratio = new_height / original_height
+
+        data = {
+            "entrance": (481, 757, 0),
+            "toilet": (320, 76, 0),
+            "food": (383, 571, 0),
+            "stationary": (269, 692, 0),
+            "hardware": (271, 593, 0),
+            "c1": (309, 598, 0),
+            "clothes": (70, 607, 0),
+            "fruits": (112, 418, 0),
+            "waiting room": (390, 416, 0),
+            "fountain": (458, 397, 0),
+            "c2": (206, 412, 0),
+            "vegetables": (190, 194, 0),
+            "stairs": (312, 202, 0),
+            "toilet": (315, 85, 0),
+            "c3": (408, 250, 0),
+            "c4": (291, 246, 0),
+        }
+
+        self.data = {}
+
+        for key, value in data.items():
+            resized_x = int(value[0] * width_ratio)
+            resized_y = int(value[1] * height_ratio)
+            self.data[key] = (resized_x, resized_y, value[2])
+
+        for key, value in self.data.items():
+            print(f"{key}: {value}")
+
 
     def add_location(self, name, x, y, z):
         self.graph.add_node(name, pos=(int(x), int(y), int(z)))

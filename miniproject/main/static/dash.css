@@ -160,32 +160,52 @@ h2{
     flex-direction: column;
     z-index: 150;
 }
-
-.search_popup > input{
-    height: 50px;
-    width:100%;
-    padding: 5px;
+.align{
+    display: flex;
+    flex-direction: row;
+}
+.align > input{
+    height: 30px;
+    width:calc(100% - 30px);
     border: 0;
     outline: 0;
-    border-bottom: 3px solid var(--primary);
     font-family: var(--font);
-    font-size: 18px;
+    font-size: 15px;
+    background-color: rgb(206, 206, 206);
+    margin: 10px;
+    border-radius: 5px;
+    padding-left: 10px;
 }
 .search_popup > span{
     margin: 20px 10px;
     font-family: var(--font);
     font-weight: bold;
 }
-.search_popup > button{
-    width: 40px;
-    height: 40px;
-    margin-top: -45px;
-    margin-left: auto;
-    border: 0;
+#resul{
+    background-color: white;
+    font-family: var(--font);
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    position: absolute;
+    top: 50px;
+    width:400px;
+    text-align: center;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+.navig{
+    width:calc(100% - 20px);
+    font-family: var(--font);
+    background-color: var(--primary);
+    color: white;
     outline: 0;
-    background-color: transparent;
+    border: 0;
+    border-radius: 5px;
     font-size: 18px;
-    color: grey;
+    text-transform: capitalize;
+    padding: 5px;
+    margin: 0px auto;
 }
 video{
     width: 350px;

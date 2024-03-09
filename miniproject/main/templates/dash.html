@@ -12,6 +12,7 @@
 
   <div class="container">
 <img src="/static/images/map.png" id="image" style="display: none;" />
+<img src="/static/images/drop.png" id="pin" style="display: none;" />
 
     <nav>
       <button id="ham" onclick="ham()"><i class="fa fa-reorder"></i></button>
@@ -37,15 +38,15 @@
     <img src="/static/images/poster.png"/>
 
     <div class="search_popup" id="search_popup" style="height: 100svh;">
-      <input placeholder="From" id="from" type="text" onkeydown="autocomp('from')" autofocus/>
-      <span class="search_result" id="result">
-      </span>
-      <input placeholder="To" id="to" type="text"/>
+      <div class="align">
+      <input placeholder="From" id="from" type="text" onkeyup="autocomp('from')" autofocus/>
+      <input placeholder="To" id="to" onkeyup="autocomp('to')" type="text"/>
+      </div>
       <!-- <button onclick="popup(0)">╳</button> -->
-      <div>
-      <button onclick="navigat()">navigate</button>
-    </div>
-      <canvas id="map" width="350" height="400" style="background-color: rgb(255, 255, 255);"></canvas>
+      <div id="resul"></div>
+      <button class="navig" onclick="navigat()">navigate</button>
+
+      <canvas id="map" width="325" height="500" style="background-color: rgb(255, 255, 255);transition: 1s;"></canvas>
     </div>
 
   </div>
@@ -95,7 +96,8 @@
     const can = canvas.getContext("2d");
     
     let im=document.getElementById("image");
-    can.drawImage(im,25,0,300,400);
+    can.drawImage(im,15,0,300,400);
+    
 
     function navigat(){
       let from=document.getElementById("from").value;
@@ -104,13 +106,18 @@
       $.get("/nav/"+from+"/"+to, function(data,status){
         h=data.path;
         canvas.width = canvas.width;
-        can.drawImage(im,25,0,300,400);
+        can.drawImage(im,15,0,300,400);
         can.moveTo(h[0][0],h[0][1])
+        can.arc(h[0][0],h[0][1],5,0,2*Math.PI);
+        can.fillStyle="red";
+        can.fill();
         for(i=0;i<=h.length-1;i++){
           can.lineTo(h[i][0],h[i][1]);
-          console.log(h[i][0],h[i][1])
         }
+        let pin=document.getElementById("pin");
+        can.drawImage(pin,(h[h.length-1][0])-10,(h[h.length-1][1])-30,25,32);
         can.strokeStyle="red";
+        can.lineWidth=5;
         can.stroke();
       })
       
@@ -119,17 +126,21 @@
 var t=document.getElementById("user").innerHTML;
 document.getElementById("profile").innerHTML=t[0];
 
-// function autocomp(id){
-//   var possible=["toilet","fruits","shoes","stationary","tools","fishing","children"];
-//   let from=document.getElementById(id).value;
-//   var i,j;
-//   for(i=0;i<=possible.length;i++){
-//     if(possible[i][0]==from[0]){
-//       document.getElementById("result").innerHTML="<p>"+possible[i]+"</p>";
-//     }
-//   }
+function autocomp(id){
+  var possible=["toilet","stairs","entrance","stationary","hardware","food","clothes","fruits","vegetables","fountain"];
+  let from=document.getElementById(id).value;
+  var i,j;
+  document.getElementById("resul").innerHTML=null;
+  for(i=0;i<=possible.length;i++){
+    if(from==""){
+    document.getElementById("resul").innerHTML=null;
+  }
+    if(possible[i].slice(0,from.length)==from){
+      document.getElementById("resul").innerHTML+="<p onclick=document.getElementById('"+id+"').value='"+possible[i]+"';document.getElementById('resul').innerHTML=null;>"+possible[i]+"</p>"
+    }
+  }
   
-// }
+}
 
 function fetchAndUpdateCart() {
     $.get("/getCart", function(data, status) {

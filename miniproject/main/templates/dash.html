@@ -98,6 +98,11 @@
     let im=document.getElementById("image");
     can.drawImage(im,15,0,300,400);
     
+function linefollow(x,y){
+  can.arc(x,y,5,0,2*Math.PI);
+  can.fillStyle="red";
+  can.fill();
+}
 
     function navigat(){
       let from=document.getElementById("from").value;

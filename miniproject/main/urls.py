@@ -16,13 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from . import authen_view,cart_view,nav_view
+from . import authen_view,cart_view,nav_view,payment_view
 
 urlpatterns = [
     path("",authen_view.index,name="index"),
     path("login/",authen_view.login,name="login"),
     path("signup/",authen_view.signup,name="signup"),
-    path("dash",authen_view.dash,name="dash"),
+    path("dash",payment_view.dash,name="dash"),
     path("logout",authen_view.logout,name="logout"),
     path("unverified",authen_view.unverified,name="unverified"),
     path("resend",authen_view.resend,name="resend"),
@@ -32,4 +32,6 @@ urlpatterns = [
     path("getCart",cart_view.get_cart,name="get_cart"),
     path("nav/<str:start>/<str:destination>",nav_view.nav,name="nav"),
     path("test",nav_view.testing,name="test"),
+    path('paymenthandler/', payment_view.paymenthandler, name='paymenthandler'),
+    path("getAmount",payment_view.getAmount,name="getAmount"),
 ]

@@ -82,7 +82,7 @@
 
     <span class="button_array">
       <button class="add_items" onclick="navi('scan','scanner')">+ Add Items</button>
-      <button class="checkout">Pay Now</button>
+      <button class="checkout" id="pay-btn">Pay Now</button>
     </span>
   </div>
   </div>
@@ -196,7 +196,7 @@ function updateProductList(cartData) {
                 <h2>${item.item}</h2>
                 <p>Quantity: ${item.quantity}</p>
                 <button id="delete"><i class="fa fa-trash"></i></button>
-                <span id="price">$${item.price}</span>
+                <span id="price">₹${item.price}</span>
             </span>
         </span>
         `;
@@ -369,7 +369,35 @@ $('#cart').click(function() {
       ham.style.transform="translate(200px)"
     }
   }
+  
 </script>
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  document.getElementById("pay-btn").onclick = function (e) {
+      $.ajax({
+          url: "/getAmount",
+          type: "GET",
+          success: function(data) {
+              var options = {
+                  key: data.razorpay_merchant_key,
+                  amount: data.razorpay_amount, 
+                  currency: data.currency,
+                  name: "Faz Check",
+                  order_id: data.razorpay_order_id,
+                  callback_url: data.callback_url,
+              };
+              console.log("success");
+              var rzp1 = new Razorpay(options);
+  
+              rzp1.open();
+          },
+          error: function(xhr, status, error) {
+              console.error("Error fetching amount:", error);
+          }
+      });
+      e.preventDefault();
+  };
+  </script>
+  
 </body>
 </html>

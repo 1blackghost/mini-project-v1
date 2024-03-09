@@ -26,7 +26,7 @@ def cart(request, value, qu):
         qu = int(qu)
         
         if qu > 0:
-            array={"apple":2,"orange":3,"book":10,"cookies":1}
+            array={"apple":10,"orange":10,"book":30,"cookies":10}
             p = qu * array.get(value, 0)
             cart.add_item(item_name=value, quantity=qu, price=p)
             cart.save()

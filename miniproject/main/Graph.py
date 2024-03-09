@@ -24,8 +24,8 @@ class MallNavigator:
             "hardware": (271, 593, 0),
             "c1": (309, 598, 0),
             "clothes": (70, 607, 0),
-            "fruits": (112, 418, 0),
-            "waiting room": (390, 416, 0),
+            "fruits": (131, 416, 0),
+            "waiting room": (308, 407, 0),
             "fountain": (458, 397, 0),
             "c2": (206, 412, 0),
             "vegetables": (190, 194, 0),
@@ -33,6 +33,7 @@ class MallNavigator:
             "toilet": (315, 85, 0),
             "c3": (408, 250, 0),
             "c4": (291, 246, 0),
+            "c5":(131,592,0),
         }
 
         self.data = {}
@@ -59,10 +60,10 @@ class MallNavigator:
         self.add_connection("entrance", "stationary")
         self.add_connection("entrance", "c1")
         self.add_connection("c1", "stationary")
+        self.add_connection("c1", "waiting room")
         self.add_connection("c1", "food")
         self.add_connection("entrance", "hardware")
         self.add_connection("clothes", "hardware")
-        self.add_connection("clothes", "fruits")
         self.add_connection("waiting room", "fruits")
         self.add_connection("waiting room", "c1")
         self.add_connection("cloth", "hardware")
@@ -78,7 +79,9 @@ class MallNavigator:
         self.add_connection("c4", "toilet")
         self.add_connection("c4", "stairs")
         self.add_connection("c4", "vegetables")
-        self.add_connection("toilet", "vegetables")
+        self.add_connection("c5", "clothes"),
+        self.add_connection("c5", "hardware")    
+        self.add_connection("c5", "fruits")    
 
 
 

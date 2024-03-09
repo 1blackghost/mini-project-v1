@@ -10,7 +10,8 @@ from . import Graph
 
 
 def nav(request,start,destination):
-
+    start=start.lower()
+    destination=destination.lower()
     navigator = Graph.MallNavigator()
     navigator.create_connections()
     path = navigator.find_path(start, destination)

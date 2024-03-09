@@ -5,7 +5,23 @@ import random
 class MallNavigator:
     def __init__(self):
         self.graph = nx.Graph()
-        self.data = {"entrance": (12, 12,0), "toilet": (13, 13,0)}
+        self.data = {"entrance": (481,757 ,0), 
+                     "toilet": (320, 76,0),
+                     "food":(383,571,0),
+                     "stationary":(269,692,0),
+                     "hardware":(271,593,0),
+                     "c1":(309,598,0),
+                     "clothes":(70,607,0),
+                     "fruits":(112,418,0),
+                     "waiting room":(390,416,0),
+                     "fountain":(458,397,0),
+                     "c2":(206,412,0),
+                     "vegetables":(190,194,0),
+                     "stairs":(312,202,0),
+                     "toilet":(315,85,0),
+                     "c3":(408,250,0),
+                     "c4":(291,246,0),
+                     }
 
     def add_location(self, name, x, y, z):
         self.graph.add_node(name, pos=(int(x), int(y), int(z)))
@@ -16,7 +32,63 @@ class MallNavigator:
     def create_connections(self):
         for name, coordinates in self.data.items():
             self.add_location(name, coordinates[0], coordinates[1], coordinates[2])
-        self.add_connection("entrance", "toilet")
+        self.add_connection("entrance", "food")
+        self.add_connection("entrance", "stationary")
+        self.add_connection("entrance", "c1")
+        self.add_connection("c1", "stationary")
+        self.add_connection("c1", "food")
+        self.add_connection("entrance", "hardware")
+        self.add_connection("clothes", "hardware")
+        self.add_connection("clothes", "fruits")
+        self.add_connection("waiting room", "fruits")
+        self.add_connection("waiting room", "c1")
+        self.add_connection("cloth", "hardware")
+        self.add_connection("fountain", "waiting room")
+        self.add_connection("cloth", "hardware")
+        self.add_connection("c2", "fruits")
+        self.add_connection("c2", "waiting room")
+        self.add_connection("c2", "vegetables")
+        self.add_connection("vegetables", "stairs")
+        self.add_connection("stairs", "toilet")
+        self.add_connection("c3", "fountain")
+        self.add_connection("c4", "c3")
+        self.add_connection("c4", "toilet")
+        self.add_connection("c4", "stairs")
+        self.add_connection("c4", "vegetables")
+
+
+
+
+        
+
+
+        
+
+        
+
+        
+
+
+
+        
+
+
+        
+
+
+        
+
+        
+
+        
+
+
+
+        
+        
+        
+        
+        
 
 
     def find_shortest_path(self, start, destination):

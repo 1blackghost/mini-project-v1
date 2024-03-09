@@ -18,3 +18,7 @@ def nav(request,start,destination):
     average_time = navigator.calculate_average_time(start, destination, average_speed=1.5)
 
     return JsonResponse({"message":"ok","path":path,"average_time":average_time})
+
+def testing(request):
+    template = loader.get_template('test.html')
+    return HttpResponse(template.render())  

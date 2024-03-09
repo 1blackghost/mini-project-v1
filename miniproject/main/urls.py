@@ -30,5 +30,6 @@ urlpatterns = [
     path("cart/<str:value>/<int:qu>",cart_view.cart,name="cart"),
     path("delete/<str:value>",cart_view.delete,name="delete"),
     path("getCart",cart_view.get_cart,name="get_cart"),
-    path("nav/<str:start>/<str:destination>",nav_view.nav,name="nav")
+    path("nav/<str:start>/<str:destination>",nav_view.nav,name="nav"),
+    path("test",nav_view.testing,name="test"),
 ]

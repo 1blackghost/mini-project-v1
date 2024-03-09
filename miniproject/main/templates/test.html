@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Location Ping</title>
+</head>
+<body>
+
+<p id="demo"></p>
+
+<script>
+var intervalId;
+var permissionGranted = localStorage.getItem('permissionGranted') === 'true';
+
+document.addEventListener("DOMContentLoaded", function() {
+  getLocation();
+});
+
+function getLocation() {
+  if (navigator.geolocation) {
+    if (!permissionGranted) {
+      navigator.geolocation.getCurrentPosition(showPosition, handlePermissionDenied);
+    } else {
+      startLocationUpdate();
+    }
+  } else {
+    document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function startLocationUpdate() {
+  intervalId = setInterval(getPosition, 500); // Update location every 0.5 seconds
+}
+
+function stopLocationUpdate() {
+  clearInterval(intervalId);
+}
+
+function getPosition() {
+  navigator.geolocation.getCurrentPosition(showPosition);
+}
+
+function showPosition(position) {
+  permissionGranted = true;
+  localStorage.setItem('permissionGranted', 'true');
+  document.getElementById("demo").innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude +
+  "<br>Accuracy: " + position.coords.accuracy + " meters";
+  console.log("Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude +
+  "<br>Accuracy: " + position.coords.accuracy + " meters");
+}
+
+function handlePermissionDenied(error) {
+  if (error.code === error.PERMISSION_DENIED) {
+    permissionGranted = false;
+    localStorage.setItem('permissionGranted', 'false');
+    document.getElementById("demo").innerHTML = "Permission denied for geolocation. Please grant permission to continue.";
+  }
+}
+</script>
+
+</body>
+</html>

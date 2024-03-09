@@ -55,6 +55,8 @@ class MallNavigator:
         self.add_connection("c4", "toilet")
         self.add_connection("c4", "stairs")
         self.add_connection("c4", "vegetables")
+        self.add_connection("toilet", "vegetables")
+
 
 
 

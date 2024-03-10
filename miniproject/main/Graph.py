@@ -10,8 +10,8 @@ class MallNavigator:
         original_width = 512
         original_height = 785
 
-        new_width = 325
-        new_height = 500
+        new_width = 340
+        new_height = 400
 
         width_ratio = new_width / original_width
         height_ratio = new_height / original_height

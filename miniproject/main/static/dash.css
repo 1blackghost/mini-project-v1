@@ -14,7 +14,7 @@ html,body{
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    z-index: -1;
+    z-index: 100;
 }
 nav{
     height: 50px;
@@ -22,7 +22,7 @@ nav{
     display: flex;
     flex-direction: row;
     box-shadow: 2px 2px 5px rgb(193, 193, 193);
-    z-index: 1000;
+    
 }
 .logo{
     width: 50px;
@@ -116,7 +116,7 @@ h1{
     border-bottom: 1px solid rgb(198, 198, 198);
 }
 .search > button{
-    width: 400px;
+    width: calc(100% - 20px);
     height: 40px;
     background-color: rgb(231, 231, 231);
     border: 0;
@@ -375,7 +375,7 @@ video{
     font-weight: bold;
 }
 #homediv > img{
-    width: 400px;
+    width: calc(100% - 20px);
     margin: 0px 10px;
 }
 .button_array{
@@ -416,4 +416,12 @@ video{
     border-radius: 5px;
     color: white;
     font-size: 15px;
+}
+@media screen and (max-width:400px){
+    .container{
+        z-index: -1;
+    }
+    nav{
+        z-index: 1000;
+    }
 }

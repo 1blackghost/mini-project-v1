@@ -326,8 +326,12 @@ $('#cart').click(function() {
     var pop=document.getElementById("search_popup");
 
     if(flag){
-      pop.style.height="calc(100svh - 60px)"
+      
+      pop.style.height="calc(100vh - 50px)";
+      
     }
+    
+    
     else{
       pop.style.height="0svh"
     }
@@ -337,6 +341,7 @@ $('#cart').click(function() {
     var e=["homediv","scanner","cartdiv","map"];
     var op=document.getElementById("options");
     var ham=document.getElementById("ham");
+    document.getElementById("search_popup").style.height="0vh";
 
     for(let i=0;i<=o.length-1;i++){
       document.getElementById(e[i]).style.display="none";

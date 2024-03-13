@@ -133,17 +133,44 @@ var t=document.getElementById("user").innerHTML;
 document.getElementById("profile").innerHTML=t[0];
 
 function autocomp(id){
-  var possible=["toilet","stairs","entrance","stationary","hardware","food","clothes","fruits","vegetables","fountain"];
+  var destination=[
+    "toilet",
+    "stairs",
+    "entrance",
+    "stationary",
+    "hardware",
+    "food",
+    "clothes",
+    "fruits",
+    "vegetables",
+    "fountain"
+  ];
+  var possible=[
+    ["gents toilet","ladies toilet","toilet"],
+    ["stairs"],
+    ["entrance","exit"],
+    ["book","pen","pencil","stationary"],
+    ["powertool","drill","machine shop","hardware"],
+    ["burger","pizza","cooldrink","food"],
+    ["jeans","shirt","pants","cloth"],
+    ["apple","orange","banana","fruits"],
+    ["carrot","onion","cabbage","vegetables"],
+    ["fountain"]
+  ]
   let from=document.getElementById(id).value;
   var i,j;
   document.getElementById("resul").innerHTML=null;
-  for(i=0;i<=possible.length;i++){
-    if(from==""){
-    document.getElementById("resul").innerHTML=null;
-  }
-  
-    if(possible[i].slice(0,from.length)==from.toLowerCase()){
-      document.getElementById("resul").innerHTML+="<p onclick=document.getElementById('"+id+"').value='"+possible[i]+"';document.getElementById('resul').innerHTML=null;>"+possible[i]+"</p>"
+
+  for(i=0;i<=possible.length-1;i++){
+    for(j=0;j<=possible[i].length-1;j++){
+
+      if(possible[i][j].slice(0,from.length)==from.toLowerCase()){
+        document.getElementById("resul").innerHTML+=
+        "<p onclick=document.getElementById('"+id+"').value='"+destination[i]+"';document.getElementById('resul').innerHTML=null;>"+possible[i][j]+"</p>"
+      }
+      if(from==""){
+        document.getElementById("resul").innerHTML=null;
+      }
     }
   }
   
@@ -327,8 +354,10 @@ $('#cart').click(function() {
 
     if(flag){
       
-      pop.style.height="calc(100vh - 50px)";
-      
+      pop.style.height="100vh";
+      let p=document.getElementById("map").style;
+      p.display="block"
+      p.opacity="1"
     }
     
     

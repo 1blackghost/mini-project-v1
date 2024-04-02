@@ -7,33 +7,37 @@ class MallNavigator:
 
     def __init__(self):
         self.graph = nx.Graph()
-        original_width = 512
-        original_height = 785
+        original_width = 350
+        original_height = 400
 
-        new_width = 340
-        new_height = 400
+        new_width = 300
+        new_height = 490
 
         width_ratio = new_width / original_width
         height_ratio = new_height / original_height
 
         data = {
-            "entrance": (481, 757, 0),
-            "toilet": (320, 76, 0),
-            "food": (383, 571, 0),
-            "stationary": (269, 692, 0),
-            "hardware": (271, 593, 0),
-            "c1": (309, 598, 0),
-            "clothes": (70, 607, 0),
-            "fruits": (131, 416, 0),
-            "waiting room": (308, 407, 0),
-            "fountain": (458, 397, 0),
-            "c2": (206, 412, 0),
-            "vegetables": (190, 194, 0),
-            "stairs": (312, 202, 0),
-            "toilet": (315, 85, 0),
-            "c3": (408, 250, 0),
-            "c4": (291, 246, 0),
-            "c5":(131,592,0),
+            "entrance": (330, 32, 0),
+            "c1": (202, 37, 0),
+            "c2": (190, 100, 0),
+            "c3": (190, 136, 0),
+            "c4": (190, 176, 0),
+            "c5": (190, 207, 0),
+            "c5": (190, 245, 0),
+            "c6": (190, 278, 0),
+            "vegetables": (92, 100, 0),
+            "cleaning products":(300,102,0),
+            "dairy":(102,137,0),
+            "beverages":(280,136,0),
+            "fruits":(108,173,0),
+            "snacks":(289,175,0),
+            "clothes":(100,206,0),
+            "waiting room":(272,206,0),
+            "hardware":(80,240,0),
+            "stationary":(272,246,0),
+            "food":(109,275,0),
+            "electronic":(302,279,0),
+            "c7":(190,278,0),
         }
 
         self.data = {}
@@ -56,69 +60,29 @@ class MallNavigator:
     def create_connections(self):
         for name, coordinates in self.data.items():
             self.add_location(name, coordinates[0], coordinates[1], coordinates[2])
-        self.add_connection("entrance", "food")
-        self.add_connection("entrance", "stationary")
-        self.add_connection("entrance", "c1")
-        self.add_connection("c1", "stationary")
-        self.add_connection("c1", "waiting room")
-        self.add_connection("c1", "food")
-        self.add_connection("entrance", "hardware")
-        self.add_connection("clothes", "hardware")
-        self.add_connection("waiting room", "fruits")
-        self.add_connection("waiting room", "c1")
-        self.add_connection("cloth", "hardware")
-        self.add_connection("fountain", "waiting room")
-        self.add_connection("cloth", "hardware")
-        self.add_connection("c2", "fruits")
-        self.add_connection("c2", "waiting room")
-        self.add_connection("c2", "vegetables")
-        self.add_connection("vegetables", "stairs")
-        self.add_connection("stairs", "toilet")
-        self.add_connection("c3", "fountain")
-        self.add_connection("c4", "c3")
-        self.add_connection("c4", "toilet")
-        self.add_connection("c4", "stairs")
-        self.add_connection("c4", "vegetables")
-        self.add_connection("c5", "clothes"),
-        self.add_connection("c5", "hardware")    
-        self.add_connection("c5", "fruits")    
-
-
-
-
+        self.add_connection("entrance", "c1") 
+        self.add_connection("c1", "c2") 
+        self.add_connection("c2", "c3") 
+        self.add_connection("c3", "c4") 
+        self.add_connection("c4", "c5") 
+        self.add_connection("c5", "c6") 
+        self.add_connection("c6", "c7") 
+        self.add_connection("c1", "vegetables")
+        self.add_connection("c1", "cleaning products")  
+        self.add_connection("c2", "dairy")  
+        self.add_connection("c2", "beverages") 
+        self.add_connection("c3", "fruits")  
+        self.add_connection("c3", "snacks") 
+        self.add_connection("c4", "clothes")  
+        self.add_connection("c4", "waiting room") 
+        self.add_connection("c5", "hardware")  
+        self.add_connection("c5", "stationary") 
+        self.add_connection("c6", "food")  
+        self.add_connection("c6", "electronic")
 
         
-
-
-        
-
-        
-
-        
-
-
-
-        
-
-
-        
-
-
-        
-
-        
-
-        
-
-
-
-        
-        
-        
-        
-        
-
-
+            
+    
     def find_shortest_path(self, start, destination):
         shortest_path_nodes = nx.dijkstra_path(self.graph, start, destination)
         shortest_path_coordinates = [tuple(self.graph.nodes[node]['pos']) for node in shortest_path_nodes]

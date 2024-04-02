@@ -6,7 +6,7 @@ from .models import User
 from django.contrib.auth.hashers import make_password, check_password
 import time
 from .models import Verify_Email,Cart,CartItem
-
+from . import helper
 
         
 
@@ -87,8 +87,8 @@ def unverified(request):
         return HttpResponse("Verification not started or user not logged in")
 
 def send_verification_email(email, hash_value):
-    print("verify email here: /verify/"+hash_value)
-
+    url="http://127.0.0.1:8000/verify/"+str(hash_value)
+    helper.send_verification_email(email,url)
 def logout(request):
     if "user" in request.session:
         request.session.clear()

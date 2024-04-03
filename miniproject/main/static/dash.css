@@ -417,6 +417,34 @@ video{
     color: white;
     font-size: 15px;
 }
+.admin{
+  display:flex;
+  flex-direction:column;
+  max-width:400px;
+}
+.admin > h1{
+  font-size:18px;
+  text-align:center;
+}
+.name{
+  margin:10px;
+  padding:10px;
+  font-size:15px;
+  width:calc(100% - 20px);
+  border-radius:5px;
+  border:2px solid black;
+}
+.submit{
+  width:200px;
+  height:60px;
+  background-color:red;
+  color:white;
+  outline:0;
+  border:0;
+  border-radius:10px;
+  margin:auto;
+  font-size:18px;
+}
 @media screen and (max-width:400px){
     .container{
         z-index: -1;

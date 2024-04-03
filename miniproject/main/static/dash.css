@@ -144,7 +144,7 @@ h2{
 }
 .search_popup{
     width: 400px;
-    top: 50px;
+    top: 70px;
     background-color: white;
     position: absolute;
     transition: 0.5s;

@@ -38,6 +38,7 @@ class MallNavigator:
             "food":(109,275,0),
             "electronic":(302,279,0),
             "c7":(190,278,0),
+            "ec":(190,203,0),
         }
 
         self.data = {}
@@ -66,15 +67,17 @@ class MallNavigator:
         self.add_connection("c3", "c4") 
         self.add_connection("c4", "c5") 
         self.add_connection("c5", "c6") 
+        self.add_connection("c4","ec")
+        self.add_connection("ec","c5")
         self.add_connection("c6", "c7") 
-        self.add_connection("c1", "vegetables")
-        self.add_connection("c1", "cleaning products")  
-        self.add_connection("c2", "dairy")  
-        self.add_connection("c2", "beverages") 
-        self.add_connection("c3", "fruits")  
-        self.add_connection("c3", "snacks") 
-        self.add_connection("c4", "clothes")  
-        self.add_connection("c4", "waiting room") 
+        self.add_connection("c2", "vegetables")
+        self.add_connection("c2", "cleaning products")  
+        self.add_connection("c3", "dairy")  
+        self.add_connection("c3", "beverages") 
+        self.add_connection("c4", "fruits")  
+        self.add_connection("c4", "snacks") 
+        self.add_connection("ec", "clothes")  
+        self.add_connection("ec", "waiting room") 
         self.add_connection("c5", "hardware")  
         self.add_connection("c5", "stationary") 
         self.add_connection("c6", "food")  

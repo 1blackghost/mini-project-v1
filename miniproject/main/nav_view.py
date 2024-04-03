@@ -9,6 +9,10 @@ from .models import Verify_Email,Cart,CartItem
 from . import Graph
 
 
+def addItem(request):
+    cart = Cart.objects.get_or_create(user=user)
+    cart.save()
+
 def nav(request,start,destination):
     start=start.lower()
     destination=destination.lower()

@@ -134,29 +134,33 @@ document.getElementById("profile").innerHTML=t[0];
 
 function autocomp(id){
   var destination=[
-    "toilet",
-    "stairs",
-    "entrance",
-    "stationary",
-    "hardware",
-    "food",
-    "clothes",
-    "fruits",
-    "vegetables",
-    "fountain"
-  ];
+"vegetables",
+"cleaning products",
+"diary",
+"beverage",
+"fruits",
+"snacks",
+"clothes",
+"waiting room",
+"hardware",
+"stationary",
+"food",
+"electronics"
+];
   var possible=[
-    ["gents toilet","ladies toilet","toilet"],
-    ["stairs"],
-    ["entrance","exit"],
-    ["book","pen","pencil","stationary"],
-    ["powertool","drill","machine shop","hardware"],
-    ["burger","pizza","cooldrink","food"],
-    ["jeans","shirt","pants","cloth"],
-    ["apple","orange","banana","fruits"],
-    ["carrot","onion","cabbage","vegetables"],
-    ["fountain"]
-  ]
+["vegetables","carrot","cabbage"],
+["cleaning products","soap","mop"],
+["diary","milk","cheese","ghee"],
+["beverage","beer","juice","tea","coffee","capachino"],
+["fruits","apple","orange","grapes","pineapple"],
+["snacks","chips","fries","puffs","pringles"],
+["clothes","pants","jeans","shirt"],
+["waiting","restroom"], 
+["hardware","powertools","drill machine","grinding machine"],
+["stationary","books","pen","pencil","crayons"],
+["food","biriyani","porotta"],
+["electronics","TV","speaker","refrigerator","fridge","washing machine"]
+];
   let from=document.getElementById(id).value;
   var i,j;
   document.getElementById("resul").innerHTML=null;

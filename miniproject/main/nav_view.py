@@ -10,6 +10,7 @@ from . import Graph
 
 
 def addItem(request):
+    user=request.get("user")
     cart = Cart.objects.get_or_create(user=user)
     cart.save()
 

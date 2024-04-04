@@ -8,6 +8,7 @@ class ProductDB(models.Model):
     name=models.CharField(max_length=100)
     price=models.CharField(max_length=100)
     quantity=models.CharField(max_length=10,default=None)
+    category=models.CharField(max_length=10,default=None)
     code=models.CharField(max_length=100)
 
     

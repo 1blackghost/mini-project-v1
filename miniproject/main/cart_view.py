@@ -1,35 +1,47 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse,HttpResponseRedirect
-from django.template import loader
-from django.middleware.csrf import get_token
-from .models import User
-from django.contrib.auth.hashers import make_password, check_password
-import time
-from .models import Verify_Email,Cart,CartItem
+from django.http import JsonResponse
+from .models import ProductDB, Cart, CartItem
+
+def find_valid_part(s):
+    n = len(s)
+    for i in range(1, n // 2 + 1):
+        if n % i == 0:
+            substring = s[:i]
+            if substring * (n // i) == s:
+                return substring
+    return s
+
 
 
 def get_cart(request):
     user = request.session.get("user")
     try:
         cart_items = CartItem.objects.filter(cart__user=user)
-        cart_data = [{'item': item.item, 'quantity': item.quantity,"price":item.price} for item in cart_items]
+        cart_data = [{'item': item.item, 'quantity': item.quantity, 'price': item.price} for item in cart_items]
         return JsonResponse({'cart': cart_data})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-
 def cart(request, value, qu):
     user = request.session.get("user")
+    value=find_valid_part(str(value))
     try:
         cart, created = Cart.objects.get_or_create(user=user)
-        value=value.lower()
+        value = value.lower()
         qu = int(qu)
         
         if qu > 0:
-            array={"apple":10,"orange":10,"book":30,"cookies":10}
-            p = qu * array.get(value, 0)
+            product = ProductDB.objects.get(name=value)
+            p = qu * int(product.price)  
             cart.add_item(item_name=value, quantity=qu, price=p)
             cart.save()
+            if (int(product.quantity)-qu)>-1:
+                product.quantity = int(product.quantity) - qu
+            
+                product.save()
+            else:
+                return JsonResponse({"status":"bad","message":"item finished!"},status=400)
+            
             if created:
                 return JsonResponse({"status": "ok", "message": "Item added to cart."}, status=200)
             else:
@@ -38,10 +50,10 @@ def cart(request, value, qu):
             return JsonResponse({"status": "bad", "error": "Invalid quantity. Quantity must be greater than 0."}, status=400)
     except ValueError:
         return JsonResponse({"status": "bad", "error": "Invalid quantity format. Please provide a valid integer."}, status=400)
+    except ProductDB.DoesNotExist:
+        return JsonResponse({"status": "bad", "error": "Product not found."}, status=404)
     except Exception as e:
         return JsonResponse({"status": "bad", "error": str(e)}, status=500)
-
-
 
 def delete(request, value):
     try:

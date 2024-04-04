@@ -4,7 +4,6 @@ import random
 
 class MallNavigator:
 
-
     def __init__(self):
         self.graph = nx.Graph()
         original_width = 350
@@ -28,7 +27,7 @@ class MallNavigator:
             "vegetables": (92, 100, 0),
             "cleaning products":(300,102,0),
             "dairy":(102,137,0),
-            "beverages":(280,136,0),
+            "beverage":(280,136,0),
             "fruits":(108,173,0),
             "snacks":(289,175,0),
             "clothes":(100,206,0),
@@ -36,7 +35,7 @@ class MallNavigator:
             "hardware":(80,240,0),
             "stationary":(272,246,0),
             "food":(109,275,0),
-            "electronic":(302,279,0),
+            "electronics":(302,279,0),
             "c7":(190,278,0),
             "ec":(190,203,0),
         }
@@ -73,7 +72,7 @@ class MallNavigator:
         self.add_connection("c2", "vegetables")
         self.add_connection("c2", "cleaning products")  
         self.add_connection("c3", "dairy")  
-        self.add_connection("c3", "beverages") 
+        self.add_connection("c3", "beverage") 
         self.add_connection("c4", "fruits")  
         self.add_connection("c4", "snacks") 
         self.add_connection("ec", "clothes")  
@@ -81,7 +80,7 @@ class MallNavigator:
         self.add_connection("c5", "hardware")  
         self.add_connection("c5", "stationary") 
         self.add_connection("c6", "food")  
-        self.add_connection("c6", "electronic")
+        self.add_connection("c6", "electronics")
 
         
             

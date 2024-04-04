@@ -12,11 +12,44 @@
 <body>
 <div class="admin">
 <h1>Admin panel</h1>
-<input type="text" class="name" placeholder="Name of Product"/>
-<input type="text" class="name" placeholder="Quantity"/>
-<input type="text" class="name" placeholder="Price"/>
-<input type="text" class="name" placeholder="Code"/>
-<button class="submit">Add item</button>
+<input type="text" class="name" placeholder="Name of Product" id="name"/>
+<input type="text" class="name" placeholder="Quantity" id="quantity"/>
+<input type="text" class="name" placeholder="Price" id="price"/>
+<input type="text" class="name" placeholder="Category" id="category"/>
+<input type="text" class="name" placeholder="Code" id="code"/>
+<button class="submit" id="submitBtn">Add item</button>
 </div>
+
+<script>
+$(document).ready(function() {
+    $(".submit").click(function() {
+        var name = $("#name").val();
+        var quantity = $("#quantity").val();
+        var price = $("#price").val();
+        var category = $("#category").val();
+        var code = $("#code").val();
+        
+        $.ajax({
+            type: "POST",
+            url: "/submit_data/",
+            data: {
+                name: name,
+                quantity: quantity,
+                price: price,
+                category: category,
+                code: code,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                alert("Data submitted successfully!");
+            },
+            error: function(xhr, errmsg, err) {
+                alert("Failed to submit data: " + errmsg);
+            }
+        });
+    });
+});
+</script>
+
 </body>
 </html>

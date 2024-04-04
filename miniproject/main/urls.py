@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from . import authen_view,cart_view,nav_view,payment_view
+from . import authen_view,cart_view,nav_view,payment_view,admin_view
 
 urlpatterns = [
     path("",authen_view.index,name="index"),
@@ -34,4 +34,6 @@ urlpatterns = [
     path("test",nav_view.testing,name="test"),
     path('paymenthandler/', payment_view.paymenthandler, name='paymenthandler'),
     path("getAmount",payment_view.getAmount,name="getAmount"),
+    path("admin",admin_view.adminPanel,name="admin"),
+    path('submit_data/', admin_view.submit_data, name='submit_data'),
 ]

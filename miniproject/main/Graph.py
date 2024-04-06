@@ -25,13 +25,13 @@ class MallNavigator:
             "c5": (190, 245, 0),
             "c6": (190, 278, 0),
             "vegetables": (92, 100, 0),
-            "cleaning products":(300,102,0),
+            "cleaning":(300,102,0),
             "dairy":(102,137,0),
             "beverage":(280,136,0),
             "fruits":(108,173,0),
             "snacks":(289,175,0),
             "clothes":(100,206,0),
-            "waiting room":(272,206,0),
+            "waiting":(272,206,0),
             "hardware":(80,240,0),
             "stationary":(272,246,0),
             "food":(109,275,0),
@@ -70,13 +70,13 @@ class MallNavigator:
         self.add_connection("ec","c5")
         self.add_connection("c6", "c7") 
         self.add_connection("c2", "vegetables")
-        self.add_connection("c2", "cleaning products")  
+        self.add_connection("c2", "cleaning")  
         self.add_connection("c3", "dairy")  
         self.add_connection("c3", "beverage") 
         self.add_connection("c4", "fruits")  
         self.add_connection("c4", "snacks") 
         self.add_connection("ec", "clothes")  
-        self.add_connection("ec", "waiting room") 
+        self.add_connection("ec", "waiting") 
         self.add_connection("c5", "hardware")  
         self.add_connection("c5", "stationary") 
         self.add_connection("c6", "food")  

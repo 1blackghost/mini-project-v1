@@ -25,15 +25,16 @@ def get_cart(request):
 def cart(request, value, qu):
     user = request.session.get("user")
     value=find_valid_part(str(value))
+    print(value)
     try:
         cart, created = Cart.objects.get_or_create(user=user)
         value = value.lower()
         qu = int(qu)
         
         if qu > 0:
-            product = ProductDB.objects.get(name=value)
+            product = ProductDB.objects.get(code=str(value))
             p = qu * int(product.price)  
-            cart.add_item(item_name=value, quantity=qu, price=p)
+            cart.add_item(item_name=product.name, quantity=qu, price=p)
             cart.save()
             if (int(product.quantity)-qu)>-1:
                 product.quantity = int(product.quantity) - qu

@@ -135,13 +135,13 @@ document.getElementById("profile").innerHTML=t[0];
 function autocomp(id){
   var destination=[
 "vegetables",
-"cleaning products",
+"cleaning",
 "diary",
 "beverage",
 "fruits",
 "snacks",
 "clothes",
-"waiting room",
+"waiting",
 "hardware",
 "stationary",
 "food",
@@ -155,7 +155,7 @@ function autocomp(id){
 ["fruits","apple","orange","grapes","pineapple"],
 ["snacks","chips","fries","puffs","pringles"],
 ["clothes","pants","jeans","shirt"],
-["waiting","restroom"], 
+["waiting room","restroom"], 
 ["hardware","powertools","drill machine","grinding machine"],
 ["stationary","books","pen","pencil","crayons"],
 ["food","biriyani","porotta"],
@@ -171,6 +171,7 @@ function autocomp(id){
       if(possible[i][j].slice(0,from.length)==from.toLowerCase()){
         document.getElementById("resul").innerHTML+=
         "<p onclick=document.getElementById('"+id+"').value='"+destination[i]+"';document.getElementById('resul').innerHTML=null;>"+possible[i][j]+"</p>"
+        ;console.log(destination[i])
       }
       if(from==""){
         document.getElementById("resul").innerHTML=null;

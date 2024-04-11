@@ -330,17 +330,31 @@ $('#cart').click(function() {
               }
 
               if (result.codeResult && result.codeResult.code) {
-                document.getElementById("overlay").style.display="block"
-                setTimeout(()=>{
-                  document.getElementById("overlay").style.opacity=1
-                })
-                document.getElementById('result').innerHTML += `${result.codeResult.code}`;
-                //window.location.href = encodeURIComponent(result.codeResult.code);
-                item=result.codeResult.code;
+                document.getElementById("overlay").style.display = "block";
+                setTimeout(() => {
+                    document.getElementById("overlay").style.opacity = 1;
+                });
+
+                const barcode = result.codeResult.code;
+
+                fetch(`/fetch_item_name/${barcode}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.item_name) {
+                            document.getElementById('result').innerHTML += `${data.item_name}`;
+                            item=data.item_name;
+                        } else {
+                            document.getElementById('result').innerHTML += "Item not found";
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching item name:', error);
+                        document.getElementById('result').innerHTML += "Error fetching item name";
+                    });
 
                 Quagga.stop();
-                scannerStarted = false; 
-              }
+                scannerStarted = false;
+            }
               
             }
           });

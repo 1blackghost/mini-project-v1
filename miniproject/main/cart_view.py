@@ -25,14 +25,13 @@ def get_cart(request):
 def cart(request, value, qu):
     user = request.session.get("user")
     value=find_valid_part(str(value))
-    print(value)
     try:
         cart, created = Cart.objects.get_or_create(user=user)
         value = value.lower()
         qu = int(qu)
         
         if qu > 0:
-            product = ProductDB.objects.get(code=str(value))
+            product = ProductDB.objects.get(name=str(value))
             p = qu * int(product.price)  
             cart.add_item(item_name=product.name, quantity=qu, price=p)
             cart.save()
@@ -66,11 +65,10 @@ def delete(request, value):
     except Exception as e:
         return JsonResponse({"status": "bad"}, status=500)
 def fetch_item_name(request, barcode):
-    barcode=barcode.lower()
     try:
         product = ProductDB.objects.get(code=barcode)
         item_name = product.name
-        return JsonResponse({"item_name": item_name})
+        return JsonResponse({"item_name": item_name.lower()})
     except ProductDB.DoesNotExist:
         return JsonResponse({"error": "Item not found"}, status=404)
     except Exception as e:

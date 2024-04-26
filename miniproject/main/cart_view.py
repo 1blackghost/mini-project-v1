@@ -65,13 +65,3 @@ def delete(request, value):
         return JsonResponse({"status": "ok"}, status=200)
     except Exception as e:
         return JsonResponse({"status": "bad"}, status=500)
-def fetch_item_name(request, barcode):
-    barcode=barcode.lower()
-    try:
-        product = ProductDB.objects.get(code=barcode)
-        item_name = product.name
-        return JsonResponse({"item_name": item_name})
-    except ProductDB.DoesNotExist:
-        return JsonResponse({"error": "Item not found"}, status=404)
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
